@@ -1,0 +1,113 @@
+RewriteEngine On
+RewriteBase /
+
+# Protect local CMS and build templates from public access
+<IfModule mod_authz_core.c>
+  <FilesMatch "^(admin\.html|site_template\.html|product_template\.html|header_partial\.html)$">
+    Require all denied
+  </FilesMatch>
+</IfModule>
+
+# 1. Force HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+# 2. Force non-WWW
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+# 3. Handle trailing slashes (Optional but good for canonical)
+# If it's not a directory and has a trailing slash, remove it? 
+# Or if it is a directory, ensure it has one?
+# Let's stick to the user requirement: canonicals are implemented in HTML.
+# The server just needs to serve files.
+
+# 4. Custom Error Pages
+ErrorDocument 404 /404.html
+
+# 5. Security Headers
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set X-XSS-Protection "1; mode=block"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css
+  AddOutputFilterByType DEFLATE application/javascript application/json application/xml text/xml image/svg+xml
+</IfModule>
+
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/css
+  AddOutputFilterByType BROTLI_COMPRESS application/javascript application/json application/xml text/xml image/svg+xml
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header append Vary Accept-Encoding
+  <FilesMatch "\.(css|js|mjs|svg|png|jpg|jpeg|webp|gif|ico)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.(html)$">
+    Header set Cache-Control "public, max-age=300"
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/jpg "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/gif "access plus 1 year"
+  ExpiresByType image/x-icon "access plus 1 year"
+  ExpiresByType text/html "access plus 5 minutes"
+</IfModule>
+
+# --- CMS GENERATED REDIRECTS START ---
+
+# --- CMS GENERATED REDIRECTS END ---
+
+# --- LEGACY SEO REDIRECTS START ---
+Redirect 301 /categories/facebook/ /categories/accounts/
+Redirect 301 /categories/bank--crypto/ /categories/bank-crypto/
+Redirect 301 /categories/Email Accounts/ /categories/email-accounts/
+Redirect 301 /categories/Dating Accounts/ /categories/dating-accounts/
+Redirect 301 /category/google/ /categories/google/
+Redirect 301 /product/old-gmail-accounts-aged-trusted-ready-for-immediate-use/ /product/buy-old-gmail-accounts/
+Redirect 301 /product/old-gmail-accounts-aged-trusted--ready-for-immediate-use/ /product/buy-old-gmail-accounts/
+Redirect 301 /product/paypal-account-packages-verified-profiles-for-payment-testing-integration/ /product/buy-verified-paypal-accounts/
+Redirect 301 /product/twitter-x-accounts-established-profiles-built-for-real-impact/ /product/buy-twitter-x-accounts/
+Redirect 301 /product/megapersonals-accounts-instant-access-to-verified-classified-ad-accounts/ /product/buy-mega-personals-accounts/
+Redirect 301 /product/google-voice-accounts-your-us-number-wherever-you-are/ /categories/google/
+Redirect 301 /product/premium-tinder-account-verified-ready-to-use/ /product/buy-verified-tinder-account/
+Redirect 301 /product/google-5-star-reviews-build-the-trust-your-business-deserves/ /product/buy-google-5-star-reviews/
+Redirect 301 /product/premium-github-account-verified--ready-for-development/ /product/buy-verified-github-account/
+Redirect 301 /product/premium-github-account-verified-ready-for-development/ /product/buy-verified-github-account/
+Redirect 301 /product/buy-google-ads-accounts/ /categories/google/
+Redirect 301 /product/google-maps-reviews-get-found-get-chosen-get-ahead/ /product/buy-google-maps-reviews/
+Redirect 301 /product/cash-app-accounts-verified-ready-to-use-profiles-for-seamless-transactions/ /product/buy-verified-cash-app-accounts/
+Redirect 301 /product/google-gemini-pro-access-advanced-ai-features-for-professional-business-use/ /product/buy-gemini-pro/
+Redirect 301 /product/verified-wechat-account-profiles/ /product/verified-wechat-accounts/
+Redirect 301 /product/hire-google-ads-expert-search-display-youtube-campaign-management/ /categories/google/
+Redirect 301 /product/premium-google-reviews-verified-delivered-to-your-business/ /product/buy-google-maps-reviews/
+Redirect 301 /product/premium-google-reviews-verified--delivered-to-your-business/ /product/buy-google-maps-reviews/
+Redirect 301 /product/buy-old-gmail-accounts-aged-account-testing-verification-package/ /product/buy-old-gmail-accounts/
+Redirect 301 /product/binance-account-packages-fully-verified-profiles-for-crypto-trading-exchange-testing/ /categories/bank-crypto/
+Redirect 301 /product/wechat-accounts-for-business/ /product/verified-wechat-accounts/
+Redirect 301 /product/buy-google-5-star-reviews-testing-reputation-workflow-package/ /product/buy-google-5-star-reviews/
+Redirect 301 /product/buy-instagram-pva-accounts/ /categories/accounts/
+Redirect 301 /product/buy-twitter-accounts/ /product/buy-twitter-x-accounts/
+Redirect 301 /product/google-5-star-reviews-strengthen-your-business-reputation-today/ /product/buy-google-5-star-reviews/
+Redirect 301 /product/negative-google-reviews-real-accounts-controlled-delivery/ /product/negative-review-response-management/
+Redirect 301 /product/buy-trustpilot-reviews/ /product/trustpilot-review-management-service/
+Redirect 301 /product/buy-facebook-reviews/ /product/facebook-review-management-service/
+Redirect 301 /product/buy-verified-binance-account/ /categories/bank-crypto/
+Redirect 301 /product/buy-google-voice-accounts/ /categories/google/
+Redirect 301 /product/buy-tinder-account/ /product/buy-verified-tinder-account/
+Redirect 301 /product/buy-google-reviews/ /categories/reviews/
+# --- LEGACY SEO REDIRECTS END ---
