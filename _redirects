@@ -1,0 +1,52 @@
+# Protect build/admin files
+/admin.html /404.html 404!
+/site_template.html /404.html 404!
+/product_template.html /404.html 404!
+/header_partial.html /404.html 404!
+
+# Netlify / Vercel Redirects
+# Force HTTPS is automatic on most modern hosts
+# Force non-WWW
+https://pvaithub.com/* https://pvaithub.com/:splat 301!
+
+# 301 Redirect: Old duplicate product slug → new differentiated slug (fixes keyword cannibalization)
+/product/buy-google-5-star-reviews/ /product/buy-google-5-star-reviews-for-local-business-boost-google-maps-ranking/ 301!
+
+# Legacy URL cleanup
+/categories/facebook/ /categories/accounts/ 301!
+/categories/bank--crypto/ /categories/bank-crypto/ 301!
+/categories/Email Accounts/ /categories/email-accounts/ 301!
+/categories/Dating Accounts/ /categories/dating-accounts/ 301!
+/category/google/ /categories/google/ 301!
+/product/old-gmail-accounts-aged-trusted-ready-for-immediate-use/ /product/buy-old-gmail-accounts/ 301!
+/product/old-gmail-accounts-aged-trusted--ready-for-immediate-use/ /product/buy-old-gmail-accounts/ 301!
+/product/paypal-account-packages-verified-profiles-for-payment-testing-integration/ /product/buy-verified-paypal-accounts/ 301!
+/product/twitter-x-accounts-established-profiles-built-for-real-impact/ /product/buy-twitter-x-accounts/ 301!
+/product/megapersonals-accounts-instant-access-to-verified-classified-ad-accounts/ /product/buy-mega-personals-accounts/ 301!
+/product/google-voice-accounts-your-us-number-wherever-you-are/ /categories/google/ 301!
+/product/premium-tinder-account-verified-ready-to-use/ /product/buy-verified-tinder-account/ 301!
+/product/google-5-star-reviews-build-the-trust-your-business-deserves/ /product/buy-google-5-star-reviews/ 301!
+/product/premium-github-account-verified--ready-for-development/ /product/buy-verified-github-account/ 301!
+/product/premium-github-account-verified-ready-for-development/ /product/buy-verified-github-account/ 301!
+/product/buy-google-ads-accounts/ /categories/google/ 301!
+/product/google-maps-reviews-get-found-get-chosen-get-ahead/ /product/buy-google-maps-reviews/ 301!
+/product/cash-app-accounts-verified-ready-to-use-profiles-for-seamless-transactions/ /product/buy-verified-cash-app-accounts/ 301!
+/product/google-gemini-pro-access-advanced-ai-features-for-professional-business-use/ /product/buy-gemini-pro/ 301!
+/product/verified-wechat-account-profiles/ /product/verified-wechat-accounts/ 301!
+/product/hire-google-ads-expert-search-display-youtube-campaign-management/ /categories/google/ 301!
+/product/premium-google-reviews-verified-delivered-to-your-business/ /product/buy-google-maps-reviews/ 301!
+/product/premium-google-reviews-verified--delivered-to-your-business/ /product/buy-google-maps-reviews/ 301!
+/product/buy-old-gmail-accounts-aged-account-testing-verification-package/ /product/buy-old-gmail-accounts/ 301!
+/product/binance-account-packages-fully-verified-profiles-for-crypto-trading-exchange-testing/ /categories/bank-crypto/ 301!
+/product/wechat-accounts-for-business/ /product/verified-wechat-accounts/ 301!
+/product/buy-google-5-star-reviews-testing-reputation-workflow-package/ /product/buy-google-5-star-reviews/ 301!
+/product/buy-instagram-pva-accounts/ /categories/accounts/ 301!
+/product/buy-twitter-accounts/ /product/buy-twitter-x-accounts/ 301!
+/product/google-5-star-reviews-strengthen-your-business-reputation-today/ /product/buy-google-5-star-reviews/ 301!
+/product/negative-google-reviews-real-accounts-controlled-delivery/ /product/negative-review-response-management/ 301!
+/product/buy-trustpilot-reviews/ /product/trustpilot-review-management-service/ 301!
+/product/buy-facebook-reviews/ /product/facebook-review-management-service/ 301!
+/product/buy-verified-binance-account/ /categories/bank-crypto/ 301!
+/product/buy-google-voice-accounts/ /categories/google/ 301!
+/product/buy-tinder-account/ /product/buy-verified-tinder-account/ 301!
+/product/buy-google-reviews/ /categories/reviews/ 301!
