@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /admin.html
+Disallow: /page.html
+Allow: /
+
+Sitemap: https://pvaithub.com/sitemap.xml
