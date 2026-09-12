@@ -3,7 +3,7 @@
 // --- Site Configuration (CMS Data) ---
 var siteConfig = {
     "siteTitle": "PVAITHUB – Digital Services & Online Solutions",
-    "metaDescription": "PVAITHUB provides account setup assistance, review management support, and digital service solutions for businesses and creators.",
+    "metaDescription": "Welcome to PVAITHUB, your trusted marketplace for verified accounts, SMM services, SEO solutions, and product reviews. Dedicated to growing your online presence with professional services.\n\nPVAITHUB: Your go-to for verified accounts, SMM, and SEO. Reliable services, expert support. Get started now!",
     "logoText": "PVAITHUB",
     "logoBadge": "",
     "heroTitle": "PVAITHUB – <span class=\"text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 text-glow\">Digital Services</span><br>Online Support & Solutions",
