@@ -541,8 +541,21 @@
                     </div>
                     
                     <div class="input-group">
-                        <label class="input-label">Featured Image URL</label>
-                        <input type="text" id="edit-blog-image" class="input-field">
+                        <label class="input-label">Featured Image</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="edit-blog-image" class="input-field flex-1" placeholder="Upload an image or enter a URL">
+                            <input type="file" id="blog-image-upload" class="hidden" accept="image/jpeg,image/png,image/webp,image/svg+xml" onchange="handleImageUpload(this, 'edit-blog-image', 'blog')">
+                            <button type="button" onclick="document.getElementById('blog-image-upload').click()" class="btn-primary text-xs whitespace-nowrap">Upload File</button>
+                            <button type="button" onclick="clearBlogImage()" class="btn-primary text-xs whitespace-nowrap">Remove Image</button>
+                        </div>
+                        <div id="blog-image-preview" class="mt-3 hidden">
+                            <img id="blog-image-preview-img" src="" alt="Blog featured image preview" class="max-h-48 rounded-lg border border-slate-700 object-contain">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label">Featured Image ALT Text (SEO)</label>
+                        <input type="text" id="edit-blog-image-title" class="input-field" placeholder="Describe the featured image">
                     </div>
 
                     <div class="input-group">
@@ -714,7 +727,7 @@
             }
         }
 
-        async function handleImageUpload(input, targetId) {
+        async function handleImageUpload(input, targetId, folder = 'products') {
             const file = input.files[0];
             if (!file) return;
             
@@ -745,7 +758,7 @@
 
             try {
                 // Use the filename in the query string so the server knows where to save it
-                const response = await fetch(`/api/upload?filename=${encodeURIComponent(file.name)}`, {
+                const response = await fetch(`/api/upload?filename=${encodeURIComponent(file.name)}&folder=${encodeURIComponent(folder)}`, {
                     method: 'POST',
                     body: file // Send raw file content
                 });
@@ -775,6 +788,55 @@
             const fileInput = document.getElementById('prod-image-upload');
             if (imageInput) imageInput.value = '';
             if (fileInput) fileInput.value = '';
+        }
+
+        function clearBlogImage() {
+            const imageInput = document.getElementById('edit-blog-image');
+            const fileInput = document.getElementById('blog-image-upload');
+            const preview = document.getElementById('blog-image-preview');
+            const previewImg = document.getElementById('blog-image-preview-img');
+            if (imageInput) imageInput.value = '';
+            if (fileInput) fileInput.value = '';
+            if (previewImg) previewImg.src = '';
+            if (preview) preview.classList.add('hidden');
+        }
+
+        function updateBlogImagePreview() {
+            const input = document.getElementById('edit-blog-image');
+            const preview = document.getElementById('blog-image-preview');
+            const img = document.getElementById('blog-image-preview-img');
+            if (!input || !preview || !img) return;
+            const value = input.value.trim();
+            if (!value) { preview.classList.add('hidden'); img.src = ''; return; }
+            img.src = value;
+            img.onload = () => preview.classList.remove('hidden');
+            img.onerror = () => preview.classList.add('hidden');
+        }
+
+        function uploadBlogInlineImage() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/jpeg,image/png,image/webp,image/svg+xml';
+            input.onchange = async () => {
+                const file = input.files && input.files[0];
+                if (!file || !blogQuill) return;
+                const validTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'];
+                if (!validTypes.includes(file.type) || file.size > 10 * 1024 * 1024) {
+                    alert('Invalid image. Use JPG, PNG, WEBP or SVG up to 10MB.');
+                    return;
+                }
+                try {
+                    const response = await fetch(`/api/upload?filename=${encodeURIComponent(file.name)}&folder=blog`, { method: 'POST', body: file });
+                    if (!response.ok) throw new Error(await response.text() || 'Upload failed');
+                    const imagePath = await response.text();
+                    const range = blogQuill.getSelection(true) || { index: blogQuill.getLength() - 1 };
+                    blogQuill.insertEmbed(range.index, 'image', imagePath, 'user');
+                    blogQuill.setSelection(range.index + 1, 0, 'silent');
+                } catch (error) {
+                    alert('Image upload failed: ' + error.message);
+                }
+            };
+            input.click();
         }
 
         // Initialize when ready
@@ -889,7 +951,7 @@
                 ['blockquote', 'code-block'],
                 [{ 'list': 'ordered'}, { 'list': 'bullet' }],
                 [{ 'color': [] }, { 'background': [] }],
-                ['link', 'clean']
+                ['link', 'image', 'clean']
             ];
 
             try {
@@ -990,6 +1052,8 @@
                 }
                 if (document.getElementById('blog-quill-editor')) {
                     blogQuill = new Quill('#blog-quill-editor', { theme: 'snow', modules: { toolbar: toolbarOptions } });
+                    const blogToolbar = blogQuill.getModule('toolbar');
+                    if (blogToolbar) blogToolbar.addHandler('image', uploadBlogInlineImage);
                 }
             } catch (e) {
                 console.error("Error initializing Quill editors:", e);
@@ -1354,6 +1418,9 @@
             document.getElementById('edit-blog-slug').value = b.slug;
             document.getElementById('edit-blog-date').value = b.date;
             document.getElementById('edit-blog-image').value = b.image || '';
+            document.getElementById('edit-blog-image').addEventListener('input', updateBlogImagePreview);
+            document.getElementById('edit-blog-image-title').value = b.image_title || '';
+            updateBlogImagePreview();
             document.getElementById('edit-blog-excerpt').value = b.excerpt || '';
             document.getElementById('edit-blog-seo-tags').value = b.seo_tags || '';
             
@@ -1388,6 +1455,7 @@
             cmsBlogs[idx].slug = document.getElementById('edit-blog-slug').value;
             cmsBlogs[idx].date = document.getElementById('edit-blog-date').value;
             cmsBlogs[idx].image = document.getElementById('edit-blog-image').value;
+            cmsBlogs[idx].image_title = document.getElementById('edit-blog-image-title').value;
             
             // CTAs
             cmsBlogs[idx].cta_1_text = document.getElementById('edit-blog-cta1-text').value;
@@ -1417,7 +1485,16 @@
                 slug: 'new-article-' + newId,
                 date: new Date().toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'}),
                 excerpt: '',
-                content: '<p>Write your article here...</p>'
+                content: '<p>Write your article here...</p>',
+                image: '',
+                image_title: '',
+                seo_title: '',
+                seo_tags: '',
+                cta_1_text: '',
+                cta_1_link: '',
+                cta_2_text: '',
+                cta_2_link: '',
+                related_ids: []
             });
             renderBlogs();
             loadBlog(newId);

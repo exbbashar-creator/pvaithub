@@ -171,8 +171,8 @@ function generateFooter(products, siteConfig) {
         return `<li><a href="${url}" class="text-slate-400 hover:text-cyan-400 transition-colors text-sm">${p.display_title || p.title}</a></li>`;
     }).join('');
 
-    const logoContent = siteConfig.logoUrl
-        ? `<img src="${siteConfig.logoUrl}" alt="${siteConfig.logoText || 'Logo'}" class="h-12 w-auto max-w-[220px] object-contain" width="360" height="110" loading="lazy" decoding="async">`
+    const logoContent = siteConfig.logoUrl 
+        ? `<img src="${siteConfig.logoUrl}" alt="${siteConfig.logoText || 'Logo'}" class="h-8 w-auto"><span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 font-extrabold text-2xl tracking-tight ml-2">{{LOGO_TEXT}}</span>`
         : `<span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 font-extrabold text-2xl tracking-tight">{{LOGO_TEXT}}</span>`;
 
     const siteDomain = (siteConfig.siteTitle || 'PVAITHUB').toLowerCase().replace(/\s+/g, '') + '.com';
@@ -633,8 +633,8 @@ function replaceGlobalPlaceholders(html, siteConfig) {
     output = output.replace(/{{META_DESCRIPTION}}/g, siteConfig.metaDescription || '');
     output = output.replace(/{{LOGO_TEXT}}/g, siteConfig.logoText || 'PVAITHUB');
     output = output.replace(/{{LOGO_BADGE}}/g, siteConfig.logoBadge || '');
-    output = output.replace(/{{FAVICON_URL}}/g, siteConfig.faviconUrl || '/favicon.svg');
-    output = output.replace(/{{LOGO_URL}}/g, siteConfig.logoUrl || '/favicon.svg');
+    output = output.replace(/{{FAVICON_URL}}/g, siteConfig.faviconUrl || '/favicon.png');
+    output = output.replace(/{{LOGO_URL}}/g, siteConfig.logoUrl || '/logo.png');
     output = output.replace(/{{HERO_TITLE}}/g, siteConfig.heroTitle || '');
     output = output.replace(/{{HERO_SUBTITLE}}/g, siteConfig.heroSubtitle || '');
     output = output.replace(/{{HERO_BUTTON_TEXT}}/g, siteConfig.heroButtonText || 'Explore Services');
@@ -799,6 +799,19 @@ function renderProductCard(product, basePath = '/', isPriority = false) {
         : product.title.replace(/^Buy\s+/i, '');
 
     const overlayLayerHtml = fullImgUrl ? '' : `<div class="absolute inset-0 ${overlayClass} transition-colors duration-300"></div>`;
+    const waNumber = (siteConfig.whatsapp || '+1 419 213 9612').replace(/[^0-9]/g, '');
+    const tgUsername = (siteConfig.telegram || '@PVAITHUB').replace('@', '');
+    const waLink = `https://wa.me/${waNumber}`;
+    const tgLink = `https://t.me/${tgUsername}`;
+    const contactButtonsHtml = `
+        <div class="flex items-center justify-center gap-2 mt-2 relative z-20">
+            <a href="${waLink}" target="_blank" rel="noopener noreferrer" aria-label="Contact PVAITHUB on WhatsApp" class="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/90 hover:bg-green-500 text-white text-[11px] font-bold shadow-lg transition-all hover:scale-105 no-underline">
+                <i data-lucide="message-circle" class="w-3.5 h-3.5"></i> WhatsApp
+            </a>
+            <a href="${tgLink}" target="_blank" rel="noopener noreferrer" aria-label="Contact PVAITHUB on Telegram" class="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full bg-sky-500/90 hover:bg-sky-500 text-white text-[11px] font-bold shadow-lg transition-all hover:scale-105 no-underline">
+                <i data-lucide="send" class="w-3.5 h-3.5"></i> Telegram
+            </a>
+        </div>`;
     const overlayTextHtml = fullImgUrl ? '' : `
             <div class="absolute top-3 left-3 bg-red-500/90 backdrop-blur-md border border-white/20 text-white text-xs font-bold px-3 py-1.5 rounded flex items-center gap-1 shadow-lg z-10">
                 <span class="text-yellow-300 text-sm">Sale!</span> PVAITHUB
@@ -809,6 +822,7 @@ function renderProductCard(product, basePath = '/', isPriority = false) {
             <a href="${productUrl}" class="bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-bold px-5 py-2 rounded-full mb-2 cursor-pointer hover:bg-white/20 hover:scale-105 transition-all block text-center no-underline z-10">
                 ORDER NOW
             </a>
+            ${contactButtonsHtml}
     `;
     
     return `
@@ -841,6 +855,7 @@ function renderProductCard(product, basePath = '/', isPriority = false) {
             <a href="${productUrl}" class="block w-full bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold rounded-xl py-3 text-center text-sm shadow-lg shadow-cyan-500/20 transition-all hover:shadow-cyan-500/40">
                 Order Now
             </a>
+            ${contactButtonsHtml}
         </div>
     </div>`;
 }
@@ -1415,7 +1430,7 @@ for (let i = 1; i <= totalPages; i++) {
                 <picture>
                     <source srcset="${(b.image || '').replace(/\.(jpg|jpeg|png)$/i, '.avif')}" type="image/avif">
                     <source srcset="${(b.image || '').replace(/\.(jpg|jpeg|png)$/i, '.webp')}" type="image/webp">
-                    <img src="${b.image || 'https://via.placeholder.com/600x400?text=No+Image'}" alt="${b.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" decoding="async" width="600" height="400">
+                    <img src="${b.image || 'https://via.placeholder.com/600x400?text=No+Image'}" alt="${b.image_title || b.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" decoding="async" width="600" height="400">
                 </picture>
                 <div class="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-transparent opacity-80"></div>
                 
@@ -1524,7 +1539,7 @@ blogs.forEach((post, index) => {
             "datePublished": post.date,
             "dateModified": post.date,
             "author": { "@type": "Person", "name": "PVAITHUB Editorial Team", "url": getDynamicUrl('home') + 'about/' },
-            "publisher": { "@type": "Organization", "name": "PVAITHUB", "url": getDynamicUrl('home'), "logo": { "@type": "ImageObject", "url": getDynamicUrl('home') + 'favicon.svg' } },
+            "publisher": { "@type": "Organization", "name": "PVAITHUB", "url": getDynamicUrl('home'), "logo": { "@type": "ImageObject", "url": getDynamicUrl('home') + 'logo.png' } },
             "mainEntityOfPage": { "@type": "WebPage", "@id": getDynamicUrl('blog', post.slug) }
         },
         {
@@ -1548,6 +1563,16 @@ blogs.forEach((post, index) => {
     <title>${post.title} | PVAITHUB</title>
     <meta name="description" content="${String(post.title + ' — ' + post.excerpt).replace(/\s+/g, ' ').trim().slice(0, 160)}">
     ${post.seo_tags && post.seo_tags.trim() !== '' ? `<meta name="keywords" content="${post.seo_tags}">` : ''}
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="${getDynamicUrl('blog', post.slug)}">
+    <meta property="og:title" content="${post.title}">
+    <meta property="og:description" content="${String(post.excerpt || '').replace(/\s+/g, ' ').trim().slice(0, 160)}">
+    ${post.image ? `<meta property="og:image" content="${getImageUrl(post.image, baseUrl)}">` : `<meta property="og:image" content="${getDynamicUrl('home')}logo.png">`}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="${getDynamicUrl('blog', post.slug)}">
+    <meta name="twitter:title" content="${post.title}">
+    <meta name="twitter:description" content="${String(post.excerpt || '').replace(/\s+/g, ' ').trim().slice(0, 160)}">
+    ${post.image ? `<meta name="twitter:image" content="${getImageUrl(post.image, baseUrl)}">` : `<meta name="twitter:image" content="${getDynamicUrl('home')}logo.png">`}
     <link rel="canonical" href="${getDynamicUrl('blog', post.slug)}" />
     <meta name="robots" content="index, follow" />
     <link rel="preload" href="${sharedCssHref}" as="style">
@@ -1608,7 +1633,7 @@ blogs.forEach((post, index) => {
                 <picture>
                     <source srcset="${post.image.replace(/\.(jpg|jpeg|png)$/i, '.avif')}" type="image/avif">
                     <source srcset="${post.image.replace(/\.(jpg|jpeg|png)$/i, '.webp')}" type="image/webp">
-                    <img src="${post.image}" alt="${post.title}" class="w-full rounded-2xl mb-10 shadow-2xl border border-white/5" loading="eager" fetchpriority="high" decoding="async" width="1200" height="630">
+                    <img src="${post.image}" alt="${post.image_title || post.title}" class="w-full rounded-2xl mb-10 shadow-2xl border border-white/5" loading="eager" fetchpriority="high" decoding="async" width="1200" height="630">
                 </picture>` : ''}
 
                 <div class="prose prose-sm md:prose-base lg:prose-xl prose-invert max-w-none prose-headings:text-white prose-a:text-cyan-400 prose-a:no-underline hover:prose-a:underline prose-strong:text-white leading-loose tracking-wide">
@@ -1669,7 +1694,7 @@ blogs.forEach((post, index) => {
     sitemap += '    <lastmod>' + new Date().toISOString().split('T')[0] + '</lastmod>\n';
     sitemap += '    <priority>0.7</priority>\n';
     if (post.image) {
-        sitemap += `    <image:image>\n      <image:loc>${escapeXml(getImageUrl(post.image, baseUrl))}</image:loc>\n    </image:image>\n`;
+        sitemap += `    <image:image>\n      <image:loc>${escapeXml(getImageUrl(post.image, baseUrl))}</image:loc>\n      <image:title>${escapeXml(post.image_title || post.title)}</image:title>\n    </image:image>\n`;
     }
     sitemap += '  </url>\n';
 
@@ -1841,7 +1866,7 @@ products.forEach(product => {
             "@type": "Organization",
             "name": "PVAITHUB",
             "url": getDynamicUrl('home'),
-            "logo": siteConfig.logoUrl || getDynamicUrl('home') + "favicon.svg"
+            "logo": siteConfig.logoUrl || getDynamicUrl('home') + "logo.png"
         }
     ];
 

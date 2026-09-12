@@ -31,17 +31,24 @@ while ($listener.IsListening) {
     if ($path -eq "/api/upload" -and $method -eq "POST") {
         try {
             $filename = $request.QueryString["filename"]
+            $folder = $request.QueryString["folder"]
             if ([string]::IsNullOrWhiteSpace($filename)) {
                 throw "Filename is required"
             }
+            if ([string]::IsNullOrWhiteSpace($folder)) { $folder = "products" }
+            if ($folder -notin @("products", "blog")) { throw "Invalid upload folder" }
 
-            # Ensure images/products directory exists
-            $imageDir = Join-Path $root "images\products"
+            # Keep uploads inside approved image directories and prevent path traversal.
+            $safeFilename = [System.IO.Path]::GetFileName($filename)
+            if ([string]::IsNullOrWhiteSpace($safeFilename) -or $safeFilename -ne $filename) { throw "Invalid filename" }
+
+            # Ensure approved image directory exists
+            $imageDir = Join-Path $root ("images\" + $folder)
             if (-not (Test-Path $imageDir)) {
                 New-Item -ItemType Directory -Force -Path $imageDir | Out-Null
             }
 
-            $filePath = Join-Path $imageDir $filename
+            $filePath = Join-Path $imageDir $safeFilename
             $fileStream = [System.IO.File]::Create($filePath)
             $request.InputStream.CopyTo($fileStream)
             $fileStream.Close()
@@ -65,7 +72,7 @@ while ($listener.IsListening) {
             $response.StatusCode = 200
             $response.StatusDescription = "OK"
             # Return the relative path to be stored in the CMS (Must start with / for root-relative)
-            $bytesOut = [System.Text.Encoding]::UTF8.GetBytes("/images/products/$optimizedFilename")
+            $bytesOut = [System.Text.Encoding]::UTF8.GetBytes("/images/$folder/$optimizedFilename")
             $response.OutputStream.Write($bytesOut, 0, $bytesOut.Length)
         } catch {
             Write-Host "Error uploading image: $_" -ForegroundColor Red
