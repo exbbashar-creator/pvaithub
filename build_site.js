@@ -171,8 +171,8 @@ function generateFooter(products, siteConfig) {
         return `<li><a href="${url}" class="text-slate-400 hover:text-cyan-400 transition-colors text-sm">${p.display_title || p.title}</a></li>`;
     }).join('');
 
-    const logoContent = siteConfig.logoUrl 
-        ? `<img src="${siteConfig.logoUrl}" alt="${siteConfig.logoText || 'Logo'}" class="h-8 w-auto"><span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 font-extrabold text-2xl tracking-tight ml-2">{{LOGO_TEXT}}</span>`
+    const logoContent = siteConfig.logoUrl
+        ? `<img src="${siteConfig.logoUrl}" alt="${siteConfig.logoText || 'Logo'}" class="h-12 w-auto max-w-[220px] object-contain" width="360" height="110" loading="lazy" decoding="async">`
         : `<span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 font-extrabold text-2xl tracking-tight">{{LOGO_TEXT}}</span>`;
 
     const siteDomain = (siteConfig.siteTitle || 'PVAITHUB').toLowerCase().replace(/\s+/g, '') + '.com';
