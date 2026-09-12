@@ -3,7 +3,7 @@
 // --- Site Configuration (CMS Data) ---
 var siteConfig = {
     "siteTitle": "PVAITHUB – Digital Services & Online Solutions",
-    "metaDescription": "Welcome to PVAITHUB, your trusted marketplace for verified accounts, SMM services, SEO solutions, and product reviews. Dedicated to growing your online presence with professional services.\n\nPVAITHUB: Your go-to for verified accounts, SMM, and SEO. Reliable services, expert support. Get started now!",
+    "metaDescription": "PVAITHUB provides account setup assistance, review management support, and digital service solutions for businesses and creators.",
     "logoText": "PVAITHUB",
     "logoBadge": "",
     "heroTitle": "PVAITHUB – <span class=\"text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 text-glow\">Digital Services</span><br>Online Support & Solutions",
@@ -109,6 +109,7 @@ var categories = [
             "Buy Verified Snapchat Accounts",
             "Buy Telegram Accounts",
             "Buy Reddit Accounts",
+            "Buy LinkedIn Accounts",
             "Buy Facebook Accounts",
             " Twitter Accounts",
             "GitHub Account",
@@ -128,8 +129,7 @@ var categories = [
             "WhatsApp Business Account Management Service",
             "Verified WeChat Account",
             "Threads Account Management Service",
-            "Tumblr Account Management Service",
-            "Buy LinkedIn Accounts"
+            "Tumblr Account Management Service"
         ]
     },
     {
@@ -150,6 +150,7 @@ var categories = [
             "Buy University Email Accounts – Academic Email Solutions",
             "Buy Custom Domain Email – Business Email Solutions",
             "Old Gmail Accounts",
+            "Buy USA Gmail Account",
             "Buy Verified Email Accounts – Reliable Email Services",
             "Buy College Email Accounts – Student Email Services",
             "Buy Professional Email Accounts – Trusted Email Services",
@@ -158,8 +159,7 @@ var categories = [
             "Buy iCloud Mail Accounts – Professional Email Services",
             "Buy Hotmail Accounts – Professional Email Solutions",
             "Buy AOL Mail Accounts – Trusted Email Solutions",
-            "Buy Yahoo Mail Accounts – Reliable Email Solutions",
-            "Buy USA Gmail Account"
+            "Buy Yahoo Mail Accounts – Reliable Email Solutions"
         ]
     },
     {
@@ -255,7 +255,7 @@ var products = [
         "display_title": "Buy USA Gmail Account",
         "slug": "buy-usa-gmail-account",
         "category": "Email Accounts",
-        "image": "/images/products/Buy USA Gmail Accounts.png",
+        "image": "",
         "image_title": "Buy USA Gmail Account",
         "min_price": 19,
         "max_price": 2500,
@@ -641,32 +641,32 @@ var products = [
     {
         "id": 57,
         "active": true,
-        "title": "Buy LinkedIn Accounts | Verified LinkedIn Accounts for Sale",
+        "title": "Buy LinkedIn Accounts from a Trusted Online Provider",
         "display_title": "Buy LinkedIn Accounts",
         "slug": "buy-linkedin-accounts",
         "category": "Accounts",
         "image": "/images/products/LinkedIn.webp",
         "image_title": "Buy LinkedIn Accounts from a Trusted Online Provider",
-        "min_price": 50,
-        "max_price": 220,
+        "min_price": 30,
+        "max_price": 80,
         "badge_color": "blue",
         "is_sale": true,
-        "short_description": "A strong and professional online presence is essential for the growth of any digital business. Many businesses use LinkedIn accounts to support their marketing, networking, and outreach activities. By using LinkedIn accounts, businesses can save time on building profiles from scratch and focus on creating professional connections and expanding their network.\n\nCompanies often use LinkedIn for recruitment, brand promotion, lead generation, and business communication. These accounts can help organizations manage different projects, connect with potential clients, and reach a wider professional audience.\n\nUsing LinkedIn for business activities allows companies to improve their networking process, organize their operations, and enhance overall productivity.\n\nFor more information or to place an order, contact us through WhatsApp or Telegram today.\n",
+        "short_description": "Looking to buy LinkedIn accounts for professional networking, outreach, marketing, or business development? Our platform provides quality LinkedIn profiles designed for users who want to expand their professional reach and connect with a wider audience.\nWhether you are a marketer, recruiter, entrepreneur, freelancer, or business owner, having access to LinkedIn profiles can help support your online networking strategy. We focus on providing reliable account options and a smooth ordering experience for customers worldwide.\nIf you are searching for buy LinkedIn accounts online, choose a provider that values quality, privacy, and customer support. Browse our available options and select the account that best matches your requirements.\nBuy LinkedIn accounts online today and take your professional networking strategy to the next level.",
         "meta_description": "Looking to buy LinkedIn accounts? Explore quality LinkedIn profiles for networking, professional outreach, marketing, and business growth. Order online today.",
         "features": [
-            "Premium Quality Accounts",
-            "With a Good Number Of Connections",
-            "Unique IP Created",
-            "100% Gmail Verified Accounts",
-            "100% number-verified PVA accounts",
-            "USA, UK, CA, and more countries accounts",
-            "Buy LinkedIn Accounts",
-            "Profile photo-attached accounts"
+            "✅ Quality LinkedIn Accounts",
+            "✅ Professional Profiles",
+            "✅ Worldwide Availability",
+            "✅ Fast & Easy Ordering",
+            "✅ Multiple Account Options",
+            "✅ Reliable Customer Support",
+            "✅ Secure Shopping Experience",
+            "✅ Professional Networking"
         ],
         "pricing": [
-            "Buy LinkedIn accounts $50",
-            "Buy LinkedIn accounts with 200 connections $65",
-            "Buy LinkedIn accounts with 500 connections $120"
+            "Buy LinkedIn accounts $30",
+            "Buy LinkedIn accounts with 200 connections $50",
+            "Buy LinkedIn accounts with 500 connections $80"
         ],
         "long_description": "<p>Detailed description...</p>",
         "related_ids": [],
