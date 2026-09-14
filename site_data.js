@@ -151,8 +151,8 @@ var categories = [
             "Buy iCloud Mail Accounts – Professional Email Services",
             "Buy Hotmail Accounts – Professional Email Solutions",
             "Buy AOL Mail Accounts – Trusted Email Solutions",
-            "Buy USA Gmail Account",
-            "Buy Yahoo Mail Accounts – Reliable Email Solutions"
+            "Buy Yahoo Mail Accounts – Reliable Email Solutions",
+            "Buy USA Gmail Account"
         ]
     },
     {
