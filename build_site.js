@@ -1101,7 +1101,13 @@ indexHtml = indexHtml.replace('{{PRODUCT_IMAGE_PRELOAD}}', '');
 indexHtml = indexHtml.replace(/{{CANONICAL_URL}}/g, 'https://pvaithub.com/');
 indexHtml = indexHtml.replace(/{{ROBOTS_META}}/g, '<meta name="robots" content="index, follow" />');
 indexHtml = indexHtml.replace(/{{REL_PATH}}/g, './');
-indexHtml = replaceGlobalPlaceholders(indexHtml, siteConfig);
+const homepageConfig = {
+    ...siteConfig,
+    heroTitle: 'Find the digital service you need',
+    heroSubtitle: 'Explore account setup, email, and review-management services by category, with practical guides and support when you need them.'
+};
+indexHtml = replaceGlobalPlaceholders(indexHtml, homepageConfig);
+indexHtml = indexHtml.replace('Find the perfect verified accounts and services for your digital growth strategy.', 'Start with a category to explore related services and guides.');
 
 // Save Homepage
 fs.writeFileSync('index.html', minifyHTML(indexHtml));
