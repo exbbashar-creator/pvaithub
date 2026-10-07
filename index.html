@@ -9,4 +9,11 @@ iframe[title="Chat widget"], iframe[title*="tawk"] { left: 20px !important; righ
   #floating-chat-options, .floating-chat-options { left: 12px !important; right: auto !important; bottom: 75px !important; }
   iframe[title="Chat widget"], iframe[title*="tawk"] { left: 12px !important; }
 }
-</style></body></html>
+
+body:has(#contact-popup:not(.hidden)) #floating-chat-container,
+body:has(#contact-popup:not(.hidden)) #floating-chat-options,
+body:has(#contact-popup:not(.hidden)) iframe[title="Chat widget"],
+body:has(#contact-popup:not(.hidden)) iframe[title*="tawk"] {
+  visibility: hidden !important;
+  pointer-events: none !important;
+}</style></body></html>
