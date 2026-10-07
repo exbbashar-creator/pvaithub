@@ -638,6 +638,7 @@ function replaceGlobalPlaceholders(html, siteConfig) {
     output = output.replace(/{{HERO_TITLE}}/g, siteConfig.heroTitle || '');
     output = output.replace(/{{HERO_SUBTITLE}}/g, siteConfig.heroSubtitle || '');
     output = output.replace(/{{HERO_BUTTON_TEXT}}/g, siteConfig.heroButtonText || 'Explore Services');
+    output = output.replace(/{{HERO_BUTTON_LINK}}/g, siteConfig.heroButtonLink || '#products-section');
     output = output.replace(/{{POPUP_TITLE}}/g, siteConfig.popupTitle || 'Contact Support');
     output = output.replace(/{{POPUP_MESSAGE}}/g, siteConfig.popupMessage || "We're here to help! 24/7 Support Available.");
     output = output.replace(/{{BADGE_TEXT}}/g, siteConfig.badgeText || 'Premium Quality PVA Accounts & Reviews');
@@ -860,8 +861,16 @@ function renderProductCard(product, basePath = '/', isPriority = false) {
     </div>`;
 }
 
+function demoteEmbeddedH1(content) {
+    if (!content) return content;
+    return String(content)
+        .replace(/<h1\b([^>]*)>/gi, '<h2$1>')
+        .replace(/<\/h1>/gi, '</h2>');
+}
+
 function applyBlogStyleToHtml(html) {
     if (!html) return html;
+    html = demoteEmbeddedH1(html);
     // Apply blog-style classes to headings (only if no class already set)
     html = html.replace(/<h1(?![^>]*class=)([^>]*)>/g, '<h1 class="text-3xl md:text-4xl font-bold text-white mb-6 mt-8 leading-tight"$1>');
     html = html.replace(/<h2(?![^>]*class=)([^>]*)>/g, '<h2 class="text-2xl font-bold text-white mb-4 mt-6"$1>');
@@ -1043,7 +1052,15 @@ const indexTemplate = indexTemplateRaw.replace('{{LATEST_PRODUCTS_GRID}}', `
     </div>
 `);
 
-let indexHtml = indexTemplate;
+// Use a dedicated homepage hero while keeping the shared template for interior pages.
+const homeHeroHtml = fs.readFileSync('home_hero.html', 'utf8');
+const heroStart = '<section class="relative py-20 md:py-32 overflow-hidden">';
+const heroStartIndex = indexTemplate.indexOf(heroStart);
+const heroEndIndex = indexTemplate.indexOf('</section>', heroStartIndex);
+if (heroStartIndex < 0 || heroEndIndex < 0) throw new Error('Could not locate the shared hero section.');
+const homepageTemplate = indexTemplate.slice(0, heroStartIndex) + homeHeroHtml + indexTemplate.slice(heroEndIndex + '</section>'.length);
+
+let indexHtml = homepageTemplate;
 
 // Inject Header
 indexHtml = indexHtml.replace('{{HEADER}}', generateFullHeader('./', products, categories, siteConfig));
@@ -1092,7 +1109,14 @@ indexHtml = indexHtml.replace('{{PRODUCT_IMAGE_PRELOAD}}', '');
 indexHtml = indexHtml.replace(/{{CANONICAL_URL}}/g, 'https://pvaithub.com/');
 indexHtml = indexHtml.replace(/{{ROBOTS_META}}/g, '<meta name="robots" content="index, follow" />');
 indexHtml = indexHtml.replace(/{{REL_PATH}}/g, './');
-indexHtml = replaceGlobalPlaceholders(indexHtml, siteConfig);
+const homepageConfig = {
+    ...siteConfig,
+    heroTitle: 'Find the <span class="home-hero__title-accent">digital service</span> you need',
+    heroSubtitle: 'Explore account setup, email, and review-management services by category, with practical guides and support when you need them.'
+};
+indexHtml = replaceGlobalPlaceholders(indexHtml, homepageConfig);
+indexHtml = indexHtml.replace('Find the perfect verified accounts and services for your digital growth strategy.', 'Start with a category to explore related services and guides.');
+indexHtml = indexHtml.replace('</head>', '    <link rel="stylesheet" href="/home_hero.css">\n</head>');
 
 // Save Homepage
 fs.writeFileSync('index.html', minifyHTML(indexHtml));
@@ -1511,6 +1535,15 @@ sitemap += '    <lastmod>' + new Date().toISOString().split('T')[0] + '</lastmod
 sitemap += '    <priority>0.8</priority>\n';
 sitemap += '  </url>\n';
 
+// Include every indexable paginated blog listing in the XML sitemap.
+for (let page = 2; page <= totalPages; page++) {
+    sitemap += '  <url>\n';
+    sitemap += `    <loc>${escapeXml(`${getDynamicUrl('blog')}page/${page}/`)}</loc>\n`;
+    sitemap += '    <lastmod>' + new Date().toISOString().split('T')[0] + '</lastmod>\n';
+    sitemap += '    <priority>0.6</priority>\n';
+    sitemap += '  </url>\n';
+}
+
 // Single Blog Posts
 blogs.forEach((post, index) => {
     const slug = slugify(post.slug);
@@ -1519,7 +1552,7 @@ blogs.forEach((post, index) => {
 
     const sidebarHtml = generateSidebar(products, blogs);
     // Modified to pass full post object for double CTA replacement
-    let contentWithCta = injectCTA(post.content, post);
+    let contentWithCta = injectCTA(demoteEmbeddedH1(post.content), post);
     
     // Internal link products (distribute 41 products across 5 blogs)
     if (!post.safety_focus) {
