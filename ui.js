@@ -57,6 +57,23 @@
     window.__PVAITHUB_TAWK_LOADED = true;
     window.Tawk_API = window.Tawk_API || {};
     window.Tawk_LoadStart = window.Tawk_LoadStart || new Date();
+
+    // Position Tawk's chat iframe on the left on desktop and mobile.
+    if (!document.getElementById('pvaithub-tawk-position')) {
+      var style = document.createElement('style');
+      style.id = 'pvaithub-tawk-position';
+      style.textContent = [
+        'iframe[src*="tawk.to"], iframe[id*="tawk"] {',
+        '  left: 20px !important;',
+        '  right: auto !important;',
+        '}',
+        '@media (max-width: 640px) {',
+        '  iframe[src*="tawk.to"], iframe[id*="tawk"] { left: 12px !important; }',
+        '}'
+      ].join('\n');
+      document.head.appendChild(style);
+    }
+
     var script = document.createElement('script');
     script.id = 'pvaithub-tawk-loader';
     script.async = true;
