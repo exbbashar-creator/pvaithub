@@ -50,6 +50,7 @@ const products = productsRaw ? productsRaw.filter(p => p.active !== false) : [];
 const blogs = sandbox.blogs || [];
 const safetyArticle = blogs.find(post => post.slug === 'are-pva-accounts-safe-risks-best-practices');
 if (safetyArticle) {
+    safetyArticle.safety_focus = true;
     safetyArticle.title = 'PVA Account Safety: Risks and Best Practices';
     safetyArticle.excerpt = 'Understand what phone verification does and does not prove, account transfer risks, platform rules, and safer account-security practices.';
     safetyArticle.seo_title = safetyArticle.title;
@@ -57,6 +58,7 @@ if (safetyArticle) {
 }
 const gmailGuide = blogs.find(post => post.slug === 'buy old and any gmail accounts');
 if (gmailGuide) {
+    gmailGuide.safety_focus = true;
     gmailGuide.title = 'Old and New Gmail Accounts: A Business Guide';
     gmailGuide.excerpt = 'Compare account age and official account setup, and understand ownership, recovery, security, and Google policy considerations.';
     gmailGuide.seo_title = gmailGuide.title;
@@ -64,6 +66,7 @@ if (gmailGuide) {
 }
 const brandGuide = blogs.find(post => post.slug === 'PVAITHUB | Reliable Digital Services for Online Businesses');
 if (brandGuide) {
+    brandGuide.safety_focus = true;
     brandGuide.title = 'PVAITHUB: Digital Services and Online Resources';
     brandGuide.excerpt = 'An overview of PVAITHUB service listings, educational resources, contact channels, and the policies to review before ordering.';
     brandGuide.seo_title = brandGuide.title;
@@ -1349,8 +1352,8 @@ function generateSidebar(products, blogs) {
 
         <!-- CTA Box -->
         <div class="bg-gradient-to-br from-cyan-600 to-blue-700 p-6 rounded-xl text-center shadow-lg shadow-cyan-500/20">
-            <h3 class="font-bold text-white mb-2 text-lg">Need Verified Accounts?</h3>
-            <p class="text-white/90 text-sm mb-6">Review service details and platform requirements before choosing an option.</p>
+            <h3 class="font-bold text-white mb-2 text-lg">Explore Services</h3>
+            <p class="text-white/90 text-sm mb-6">Review each listing and applicable platform requirements before choosing a service.</p>
             <a href="/" class="block bg-white text-blue-700 font-bold py-3 rounded-lg hover:bg-slate-100 transition-colors shadow-md">
                 View All Products
             </a>
@@ -1360,6 +1363,7 @@ function generateSidebar(products, blogs) {
 
 // Helper: Inject CTA (Replaces [[CTA1]] and [[CTA2]])
 function injectCTA(content, post) {
+    if (post.safety_focus) return content.replace(/\[\[CTA\d+\]\]/g, '');
     const generateHTML = (text, link) => `
         <div class="my-10 bg-gradient-to-r from-slate-800 to-slate-900 border-l-4 border-cyan-500 p-6 rounded-r-xl shadow-lg">
             <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -1736,7 +1740,7 @@ blogs.forEach((post, index) => {
                     <div>
                         <p class="text-xs font-bold text-cyan-400 uppercase tracking-widest mb-1">Written by</p>
                         <h4 class="text-white font-bold text-lg mb-1">PVAITHUB Editorial Team</h4>
-                        <p class="text-slate-400 text-sm leading-relaxed">Our editorial team specializes in verified digital accounts, PVA account strategies, and online marketing. With 5+ years of hands-on experience in the PVA niche, we provide accurate, actionable guides to help businesses scale safely.</p>
+                        <p class="text-slate-400 text-sm leading-relaxed">The PVAITHUB editorial team prepares practical information about digital services, account security, and platform requirements. Check official platform documentation for current rules and requirements.</p>
                         <div class="flex flex-wrap gap-3 mt-3">
                             <span class="text-xs px-3 py-1 bg-cyan-500/10 text-cyan-400 rounded-full border border-cyan-500/20">PVA Accounts</span>
                             <span class="text-xs px-3 py-1 bg-blue-500/10 text-blue-400 rounded-full border border-blue-500/20">Digital Marketing</span>
