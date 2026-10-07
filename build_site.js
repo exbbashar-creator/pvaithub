@@ -48,6 +48,40 @@ const reviewsData = sandbox.reviewsData;
 const productsRaw = sandbox.products;
 const products = productsRaw ? productsRaw.filter(p => p.active !== false) : [];
 const blogs = sandbox.blogs || [];
+const safetyArticle = blogs.find(post => post.slug === 'are-pva-accounts-safe-risks-best-practices');
+if (safetyArticle) {
+    safetyArticle.title = 'PVA Account Safety: Risks and Best Practices';
+    safetyArticle.excerpt = 'Understand what phone verification does and does not prove, account transfer risks, platform rules, and safer account-security practices.';
+    safetyArticle.seo_title = safetyArticle.title;
+    safetyArticle.content = `<h2>What phone verification means</h2><p>PVA usually means phone-verified account: an account that completed a phone verification step. That step does not prove who created or controls an account, establish trust, or guarantee future access. Platform requirements differ and can change.</p><h2>Risks to consider</h2><ul><li><strong>Ownership and recovery:</strong> A transferred account may still be recoverable by someone else or may lack recovery details you control.</li><li><strong>Platform rules:</strong> Some services restrict account transfers, multiple accounts, or certain uses. Review the current rules before acting.</li><li><strong>Security and privacy:</strong> Do not share passwords or verification codes. Use official recovery and security settings for accounts you own.</li><li><strong>Access can change:</strong> Verification or account age does not guarantee acceptance, deliverability, limits, or immunity from suspension.</li></ul><h2>Safer practices</h2><p>For an account you rely on, create it through the platform and keep its recovery email, phone, and authentication methods under your control. Use accurate information, enable available security protections, and contact the platform through its official help channels if access is challenged.</p><h2>Before choosing a service</h2><p>Read the listing and relevant platform terms carefully. Ask support about unclear service details, delivery timing, and the published refund policy. No seller can guarantee that a third-party platform will accept or retain an account.</p>`;
+}
+const gmailGuide = blogs.find(post => post.slug === 'buy old and any gmail accounts');
+if (gmailGuide) {
+    gmailGuide.title = 'Old and New Gmail Accounts: A Business Guide';
+    gmailGuide.excerpt = 'Compare account age and official account setup, and understand ownership, recovery, security, and Google policy considerations.';
+    gmailGuide.seo_title = gmailGuide.title;
+    gmailGuide.content = `<h2>What “old” and “new” mean</h2><p>An older account was created earlier than a newer one. Account age alone does not prove activity, trust, better limits, or future access.</p><h2>Ownership and recovery matter</h2><p>For an account your business depends on, create it through Google and keep the recovery email, phone number, and authentication methods under your control. A transferred account may have recovery information you cannot change or may still be accessible to someone else.</p><h2>Follow Google's current rules</h2><p>Review Google's current terms and account policies before creating, transferring, or using an account for business. Requirements can vary by product and region. Do not use accounts to mislead people, bypass security checks, or evade platform safeguards.</p><h2>Secure an account you own</h2><ul><li>Use a strong, unique password and enable available two-step verification.</li><li>Keep recovery options current and secure.</li><li>Review signed-in devices and account activity using Google's official security tools.</li><li>Use Google Workspace or other official business options where they fit your needs.</li></ul><p>If you are considering a third-party service, read the listing and published policies carefully. No seller can guarantee account ownership, future access, deliverability, or platform acceptance.</p>`;
+}
+const brandGuide = blogs.find(post => post.slug === 'PVAITHUB | Reliable Digital Services for Online Businesses');
+if (brandGuide) {
+    brandGuide.title = 'PVAITHUB: Digital Services and Online Resources';
+    brandGuide.excerpt = 'An overview of PVAITHUB service listings, educational resources, contact channels, and the policies to review before ordering.';
+    brandGuide.seo_title = brandGuide.title;
+    brandGuide.content = `<h2>Explore services and resources</h2><p>PVAITHUB publishes service listings and practical resources about digital account setup, online services, and customer review management. Each listing should be reviewed for its specific scope, availability, and terms.</p><h2>Check platform requirements</h2><p>Third-party platforms set their own rules for accounts, access, reviews, and business use. Read the current platform policies before taking action. Phone verification or account age does not guarantee trust or continued access.</p><h2>Before placing an order</h2><ul><li>Read the product description and confirm that the service matches your needs.</li><li>Review the delivery and refund policies that apply to that listing.</li><li>Ask support if an important detail is unclear; response times may vary.</li><li>Never share passwords or verification codes through support channels.</li></ul><p>Use the guides section for general information and the contact page for questions about a specific listing. Availability, delivery, and support terms may vary by service.</p>`;
+}
+for (const product of products) {
+    if (product.slug === 'buy-google-maps-reviews' || product.slug === 'buy-google-5-star-reviews') {
+        product.title = product.slug === 'buy-google-maps-reviews' ? 'Google Maps Review Management' : 'Google Review Management';
+        product.short_description = 'Support for organizing genuine customer feedback, profile information, and compliant reputation workflows. Reviews must reflect real customer experiences.';
+        product.long_description = `<h2>Manage genuine customer feedback</h2><p>This service focuses on review monitoring, response workflows, profile presentation, and practical ways to invite real customers to share honest feedback.</p><p>Reviews should reflect genuine experiences. We do not create, sell, or post fabricated reviews, and no service can guarantee a rating, ranking, or that a third-party platform will retain a review.</p><h3>Before ordering</h3><p>Review the listing for scope and availability. Follow the platform's current review policies and use its approved tools to request feedback.</p>`;
+    }
+    if (['buy-old-gmail-accounts', 'buy-verified-tinder-account', 'buy-megapersonals-accounts', 'buy-twitter-x-accounts', 'buy-verified-github-account', 'buy-verified-snapchat-accounts', 'verified-wechat-accounts', 'buy-verified-cash-app-accounts', 'buy-facebook-ads-accounts'].includes(product.slug)) {
+        product.short_description = 'Review the listing for current service scope and availability. Account transfers can create ownership, recovery, security, and platform eligibility concerns.';
+        product.meta_description = product.short_description;
+        product.features = ['Review current listing details before ordering', 'Keep account recovery methods under your control', 'Follow the relevant platform rules'];
+        product.long_description = `<h2>Review the service details carefully</h2><p>Account age, phone verification, or a seller's description does not prove ownership, account history, platform trust, or future access. Service details and availability can vary.</p><h3>Before making a decision</h3><p>Review the current platform rules. Consider creating an account directly with the platform and keeping all recovery methods under your control. Do not use accounts to mislead others, violate platform rules, or evade safeguards.</p><p>Check the listing and published policies for current delivery and support terms. No third-party service can guarantee continued access to a platform account.</p>`;
+    }
+}
 const gradients = sandbox.gradients || {}; // gradients might be missing or defined elsewhere
 const redirects = sandbox.redirects || siteConfig.redirects || []; // For 301 redirects
 
@@ -643,7 +677,7 @@ function replaceGlobalPlaceholders(html, siteConfig) {
     output = output.replace(/{{HERO_BUTTON_TEXT}}/g, siteConfig.heroButtonText || 'Explore Services');
     output = output.replace(/{{HERO_BUTTON_LINK}}/g, siteConfig.heroButtonLink || '#products-section');
     output = output.replace(/{{POPUP_TITLE}}/g, siteConfig.popupTitle || 'Contact Support');
-    output = output.replace(/{{POPUP_MESSAGE}}/g, siteConfig.popupMessage || "We're here to help! 24/7 Support Available.");
+    output = output.replace(/{{POPUP_MESSAGE}}/g, siteConfig.popupMessage || "Questions? Contact us through the listed channels. Response times may vary.");
     output = output.replace(/{{BADGE_TEXT}}/g, siteConfig.badgeText || 'Premium Quality PVA Accounts & Reviews');
     
     const analyticsCode = siteConfig.analyticsId ? `
@@ -1316,7 +1350,7 @@ function generateSidebar(products, blogs) {
         <!-- CTA Box -->
         <div class="bg-gradient-to-br from-cyan-600 to-blue-700 p-6 rounded-xl text-center shadow-lg shadow-cyan-500/20">
             <h3 class="font-bold text-white mb-2 text-lg">Need Verified Accounts?</h3>
-            <p class="text-white/90 text-sm mb-6">Get premium, phone-verified accounts for Google, Facebook, and more instantly.</p>
+            <p class="text-white/90 text-sm mb-6">Review service details and platform requirements before choosing an option.</p>
             <a href="/" class="block bg-white text-blue-700 font-bold py-3 rounded-lg hover:bg-slate-100 transition-colors shadow-md">
                 View All Products
             </a>
@@ -1931,11 +1965,11 @@ products.forEach(product => {
 
     // SEO
     const seoTitle = product.seo_title || `${product.title} – Verified & Fast | PVAITHUB`;
-    let seoDesc = product.meta_description || product.short_description || `Buy ${product.title} instantly.`;
+    let seoDesc = product.meta_description || product.short_description || `${product.title}: review the listing for current service details.`;
     
     // Ensure Description Length (120-160 chars)
     if (seoDesc.length < 120) {
-        seoDesc += " Get high-quality verified accounts instantly at PVAITHUB. Secure, fast, and reliable service with 24/7 support.";
+        seoDesc += " Review the current listing, delivery information, and applicable platform rules before ordering.";
     }
     if (seoDesc.length > 160) {
         seoDesc = seoDesc.substring(0, 157) + "...";
@@ -2091,27 +2125,27 @@ buildStaticPage('policies', 'Policies', 'Read PVAITHUB privacy, terms, refund, a
 <a href="/policies/shipping-or-delivery-policy/" class="bg-[#1E293B]/60 border border-white/5 rounded-2xl p-7 hover:border-cyan-500/40 transition-all"><h2 class="text-xl font-bold text-white mb-2">Digital Delivery Policy</h2><p class="text-slate-400">How digital orders and service confirmations are delivered.</p></a>
 </div>`);
 
-buildStaticPage('about', 'About Us', 'Learn about PVAITHUB – your trusted source for verified PVA accounts, authentic reviews, and premium digital services since 2020.', `
+buildStaticPage('about', 'About Us', 'Learn about PVAITHUB services, setup guidance, review management support, and contact options.', `
     <div class="text-center mb-16">
         <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Who We <span class="text-cyan-400">Are</span></h2>
-        <p class="text-slate-400 max-w-3xl mx-auto text-lg leading-relaxed">PVAITHUB is a leading provider of premium, phone-verified accounts (PVA) and authentic digital services. Since 2020, we have been helping businesses, marketers, and entrepreneurs scale their online presence with high-quality, reliable accounts.</p>
+        <p class="text-slate-400 max-w-3xl mx-auto text-lg leading-relaxed">PVAITHUB shares information about account setup, digital services, and review management support. Service scope, availability, and requirements vary by listing; review the details and applicable platform rules before making a decision.</p>
     </div>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
         <div class="bg-[#1E293B]/60 border border-white/5 rounded-2xl p-6 text-center hover:border-cyan-500/30 transition-all">
-            <div class="text-4xl font-black text-cyan-400 mb-2">5K+</div>
-            <p class="text-slate-400 text-sm font-medium">Happy Customers</p>
+            <div class="text-2xl font-black text-cyan-400 mb-2">Guides</div>
+            <p class="text-slate-400 text-sm font-medium">Practical information</p>
         </div>
         <div class="bg-[#1E293B]/60 border border-white/5 rounded-2xl p-6 text-center hover:border-cyan-500/30 transition-all">
-            <div class="text-4xl font-black text-green-400 mb-2">100%</div>
-            <p class="text-slate-400 text-sm font-medium">Verified Accounts</p>
+            <div class="text-2xl font-black text-green-400 mb-2">Services</div>
+            <p class="text-slate-400 text-sm font-medium">Details vary by listing</p>
         </div>
         <div class="bg-[#1E293B]/60 border border-white/5 rounded-2xl p-6 text-center hover:border-cyan-500/30 transition-all">
-            <div class="text-4xl font-black text-purple-400 mb-2">24/7</div>
-            <p class="text-slate-400 text-sm font-medium">Customer Support</p>
+            <div class="text-2xl font-black text-purple-400 mb-2">Support</div>
+            <p class="text-slate-400 text-sm font-medium">Contact channels listed</p>
         </div>
         <div class="bg-[#1E293B]/60 border border-white/5 rounded-2xl p-6 text-center hover:border-cyan-500/30 transition-all">
-            <div class="text-4xl font-black text-yellow-400 mb-2">40+</div>
-            <p class="text-slate-400 text-sm font-medium">Services Available</p>
+            <div class="text-2xl font-black text-yellow-400 mb-2">Policies</div>
+            <p class="text-slate-400 text-sm font-medium">Review before ordering</p>
         </div>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
@@ -2137,16 +2171,16 @@ buildStaticPage('about', 'About Us', 'Learn about PVAITHUB – your trusted sour
         <a href="/" class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-bold rounded-xl shadow-lg shadow-cyan-500/20 hover:scale-105 transition-transform">Explore All Services <i data-lucide="arrow-right" class="w-5 h-5"></i></a>
     </div>
 `);
-buildStaticPage('contact', 'Contact Us', 'Get in touch with PVAITHUB for 24/7 support via WhatsApp, Telegram, or Email. We respond within minutes.', `
+buildStaticPage('contact', 'Contact Us', 'Contact PVAITHUB about a service or order through WhatsApp, Telegram, or email. Response times may vary.', `
     <div class="text-center mb-16">
         <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Get In <span class="text-cyan-400">Touch</span></h2>
-        <p class="text-slate-400 max-w-2xl mx-auto">Have questions? Need help? Our support team is available 24/7 and typically responds within minutes.</p>
+        <p class="text-slate-400 max-w-2xl mx-auto">Have a question about a service or order? Contact us through the channel that works best for you. Response times may vary.</p>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
         <a href="https://wa.me/${(siteConfig.whatsapp || '').replace(/[^0-9]/g, '')}" target="_blank" rel="noopener" class="group bg-[#1E293B]/60 border border-white/5 rounded-2xl p-8 text-center hover:border-green-500/40 hover:-translate-y-2 transition-all">
             <div class="w-16 h-16 mx-auto bg-green-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-green-500/20 transition-colors"><i data-lucide="phone" class="w-8 h-8 text-green-400"></i></div>
             <h3 class="text-xl font-bold text-white mb-2">WhatsApp</h3>
-            <p class="text-slate-400 text-sm mb-4">Fastest response time</p>
+            <p class="text-slate-400 text-sm mb-4">Message us with your question</p>
             <span class="text-green-400 font-bold text-sm">${siteConfig.whatsapp || ''}</span>
         </a>
         <a href="https://t.me/${(siteConfig.telegram || '').replace('@', '')}" target="_blank" rel="noopener" class="group bg-[#1E293B]/60 border border-white/5 rounded-2xl p-8 text-center hover:border-blue-500/40 hover:-translate-y-2 transition-all">
@@ -2164,33 +2198,50 @@ buildStaticPage('contact', 'Contact Us', 'Get in touch with PVAITHUB for 24/7 su
     </div>
     <div class="bg-[#1E293B]/40 border border-white/5 rounded-2xl p-8 md:p-12">
         <h3 class="text-2xl font-bold text-white mb-8 text-center">Send Us a <span class="text-cyan-400">Message</span></h3>
-        <form action="mailto:${siteConfig.supportEmail}" method="POST" enctype="text/plain" class="max-w-2xl mx-auto space-y-6">
+        <form id="contact-message-form" action="mailto:${siteConfig.supportEmail}" method="POST" enctype="text/plain" class="max-w-2xl mx-auto space-y-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <input type="text" placeholder="Your Name" class="w-full px-5 py-4 bg-[#0F172A] border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition-colors">
-                <input type="email" placeholder="Your Email" class="w-full px-5 py-4 bg-[#0F172A] border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition-colors">
+                <input id="contact-name" type="text" placeholder="Your Name" autocomplete="name" required class="w-full px-5 py-4 bg-[#0F172A] border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition-colors">
+                <input id="contact-email" type="email" placeholder="Your Email" autocomplete="email" required class="w-full px-5 py-4 bg-[#0F172A] border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition-colors">
             </div>
-            <input type="text" placeholder="Subject" class="w-full px-5 py-4 bg-[#0F172A] border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition-colors">
-            <textarea rows="5" placeholder="Your Message..." class="w-full px-5 py-4 bg-[#0F172A] border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition-colors resize-none"></textarea>
+            <input id="contact-subject" type="text" placeholder="Subject" required class="w-full px-5 py-4 bg-[#0F172A] border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition-colors">
+            <textarea id="contact-body" rows="5" placeholder="Your Message..." required class="w-full px-5 py-4 bg-[#0F172A] border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition-colors resize-none"></textarea>
             <button type="submit" class="w-full py-4 bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-bold rounded-xl shadow-lg shadow-cyan-500/20 hover:scale-[1.02] transition-transform">Send Message</button>
         </form>
+        <script>
+            (function () {
+                const form = document.getElementById('contact-message-form');
+                if (!form) return;
+                form.addEventListener('submit', function (event) {
+                    event.preventDefault();
+                    const subject = document.getElementById('contact-subject').value.trim();
+                    const body = [
+                        'Name: ' + document.getElementById('contact-name').value.trim(),
+                        'Email: ' + document.getElementById('contact-email').value.trim(),
+                        '',
+                        document.getElementById('contact-body').value.trim()
+                    ].join('\\n');
+                    window.location.href = 'mailto:${siteConfig.supportEmail}?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+                });
+            })();
+        </script>
     </div>
 `);
 
 const faqItems = [
-    { q: 'What is a PVA account?', a: 'PVA stands for Phone Verified Account. It is a digital account on platforms like Google, Gmail, Facebook, or Twitter that has been registered and authenticated using a unique, real phone number. Phone verification signals to the platform that a real human created the account — resulting in higher trust, fewer security challenges, and longer account lifespan.' },
-    { q: 'How long does delivery take?', a: 'Most orders are delivered instantly after payment confirmation. Some specialized services may take up to 24 hours. You will receive your credentials via email.' },
-    { q: 'Are the accounts phone-verified (PVA)?', a: 'Yes, all our accounts are 100% phone-verified using unique phone numbers. We use real device fingerprints and unique IPs to ensure maximum account quality and longevity.' },
-    { q: 'What is the difference between a new PVA and an aged PVA account?', a: 'A new PVA account is freshly created and phone-verified. An aged PVA account was created months or years ago and has an established activity history. Aged accounts carry significantly more platform trust — they are less likely to be flagged, have higher sending limits, and integrate more smoothly with third-party tools.' },
-    { q: 'What payment methods do you accept?', a: 'We accept multiple secure payment methods including Cryptocurrency (Bitcoin, USDT, Ethereum), PayPal, and other digital payment platforms for your convenience.' },
-    { q: 'Do you offer a refund or replacement?', a: 'Yes! We offer a replacement guarantee for any account that does not work upon delivery. Please contact our support team within 24 hours of purchase if you encounter any issues.' },
-    { q: 'Can I use these accounts for business purposes?', a: 'Our accounts are designed for legitimate business use including marketing, advertising, social media management, and research purposes. Please use them responsibly and in compliance with platform terms.' },
-    { q: 'How do I use PVA accounts safely to avoid bans?', a: 'Always access your PVA accounts through a residential proxy that matches the account\'s country of origin. Use an anti-detect browser (like GoLogin or Multilogin) with a unique profile per account. During the first week, warm up the account gradually — browse normally, do not immediately start aggressive marketing activities.' },
-    { q: 'How do I contact support?', a: 'You can reach our 24/7 support team via WhatsApp, Telegram, or Email. We typically respond within minutes during business hours.' },
-    { q: 'Are bulk orders available?', a: 'Yes, we offer bulk pricing for large orders. Contact our support team for custom quotes and enterprise solutions tailored to your needs.' },
-    { q: 'What are Google Reviews PVA accounts used for?', a: 'Google Reviews PVA accounts are used by businesses and agencies to post positive reviews on Google Business Profiles and Google Maps listings. They are created from verified, unique phone numbers and residential IPs to ensure reviews appear natural and remain posted without being removed.' },
-    { q: 'Why should I buy aged Gmail accounts instead of creating new ones?', a: 'Aged Gmail accounts have established trust history with Google. New accounts face frequent security checkpoints, daily sending limits, and are much more likely to be suspended when used for outreach or marketing. Aged accounts bypass these restrictions, giving you immediate operational capability.' },
-    { q: 'Is my personal information safe?', a: 'Absolutely. We follow strict privacy policies and never share your personal information with third parties. All transactions are encrypted and securely processed.' },
-    { q: 'What is your replacement guarantee policy?', a: 'If any account fails to work within 24 hours of delivery, we provide a free replacement at no extra cost. Our replacement process is fast — typically completed within 1–6 hours of your support request. We stand behind every order we fulfill.' }
+    { q: 'What is a PVA account?', a: 'PVA usually means phone-verified account. It describes an account that completed a phone verification step. It does not prove who controls the account or guarantee trust, access, or acceptance by a platform.' },
+    { q: 'How long does delivery take?', a: 'Delivery timing depends on the service and order. Check the product listing for current details or contact support before ordering.' },
+    { q: 'Are all accounts phone-verified?', a: 'Verification details vary by service. Review the individual listing to see what is included and ask support if anything is unclear.' },
+    { q: 'What is the difference between a new and an aged account?', a: 'A new account was created recently; an aged account was created earlier. Account age does not guarantee higher trust, larger limits, fewer checks, or continued access.' },
+    { q: 'What payment methods do you accept?', a: 'Available payment methods are shown during checkout or in the relevant product information. Contact support if you need clarification before ordering.' },
+    { q: 'Do you offer a refund or replacement?', a: 'Eligibility depends on the applicable refund policy and the service purchased. Please read the policy and contact support with order details if you have a question.' },
+    { q: 'Can I use these services for business?', a: 'That depends on the service and the platform involved. Review the platform’s current terms and applicable laws before use; the listing does not override third-party rules.' },
+    { q: 'How can I use online accounts responsibly?', a: 'Follow the platform’s official rules, use accurate information, keep recovery details under your control, and avoid activity that misleads users or evades platform safeguards. No setup can guarantee an account will avoid restrictions.' },
+    { q: 'How do I contact support?', a: 'Use the WhatsApp, Telegram, or email links on this site. Response times may vary.' },
+    { q: 'Are bulk orders available?', a: 'Availability and terms can vary. Contact support to ask about a specific service and quantity before ordering.' },
+    { q: 'Can I buy reviews for my business?', a: 'Reviews should reflect genuine customer experiences. We do not recommend buying or posting fabricated reviews; use platform-approved tools to invite real customers to share feedback.' },
+    { q: 'Should I buy an aged Gmail account or create my own?', a: 'For an account you rely on, create it through Google and keep the recovery methods under your control. Transferred accounts can create ownership, recovery, security, and platform-rule issues.' },
+    { q: 'How is my personal information handled?', a: 'Please read the privacy policy for details about information handling. Contact support if you need clarification about a specific order or request.' },
+    { q: 'What are the replacement terms?', a: 'Any replacement eligibility, time limit, or process is governed by the published refund policy and the details for the service you ordered.' }
 ];
 const faqJsonLd = { "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": faqItems.map(f => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } })) };
 const faqHtml = faqItems.map(f => `
@@ -2205,12 +2256,12 @@ const faqHtml = faqItems.map(f => `
 buildStaticPage('faq', 'Frequently Asked Questions', 'Find answers to common questions about PVA accounts, delivery, payments, refunds, and more at PVAITHUB.', `
     <div class="text-center mb-16">
         <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Common <span class="text-cyan-400">Questions</span></h2>
-        <p class="text-slate-400 max-w-2xl mx-auto">Everything you need to know about our services. Can't find what you're looking for? Contact our 24/7 support team.</p>
+        <p class="text-slate-400 max-w-2xl mx-auto">Find answers about our services. Contact us through the listed channels if you need clarification; response times may vary.</p>
     </div>
     <div class="max-w-4xl mx-auto space-y-4 mb-16">${faqHtml}</div>
     <div class="text-center bg-[#1E293B]/40 border border-white/5 rounded-2xl p-8">
         <h3 class="text-xl font-bold text-white mb-3">Still Have Questions?</h3>
-        <p class="text-slate-400 mb-6">Our support team is available 24/7 to help you.</p>
+        <p class="text-slate-400 mb-6">Contact options and response times may vary.</p>
         <a href="/contact/" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-bold rounded-xl hover:scale-105 transition-transform">Contact Support <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
     </div>
 `, faqJsonLd);
@@ -2250,15 +2301,15 @@ const serviceCategories = categories.map(cat => {
         </div>
     `;
 }).join('');
-buildStaticPage('services', 'Our Services', 'Explore 40+ premium digital services including verified PVA accounts, Google Reviews, Facebook accounts, and crypto exchange accounts.', `
+buildStaticPage('services', 'Our Services', 'Explore digital services and review the details, availability, and applicable platform rules for each listing.', `
     <div class="text-center mb-16">
         <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Our <span class="text-cyan-400">Services</span></h2>
-        <p class="text-slate-400 max-w-2xl mx-auto">We offer a wide range of premium digital services across multiple platforms. All accounts are verified, secure, and delivered instantly.</p>
+        <p class="text-slate-400 max-w-2xl mx-auto">Service scope, verification details, and delivery timing vary by listing. Review each service carefully and follow the applicable platform rules.</p>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">${serviceCategories}</div>
     <div class="bg-gradient-to-r from-cyan-600/20 to-blue-600/20 border border-cyan-500/20 rounded-2xl p-8 md:p-12 text-center">
         <h3 class="text-2xl font-bold text-white mb-4">Can't Find What You Need?</h3>
-        <p class="text-slate-300 mb-8">Contact us for custom orders and bulk pricing. We can source almost any verified account.</p>
+        <p class="text-slate-300 mb-8">Contact us to ask about a specific service or quantity. Availability and terms vary.</p>
         <a href="/contact/" class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-bold rounded-xl shadow-lg shadow-cyan-500/20 hover:scale-105 transition-transform">Request Custom Order <i data-lucide="arrow-right" class="w-5 h-5"></i></a>
     </div>
 `);
@@ -2269,7 +2320,7 @@ const pvaDefinitionJsonLd = [
         "@context": "https://schema.org",
         "@type": "Article",
         "headline": "What is a PVA Account? Complete Definitional Guide",
-        "description": "PVA stands for Phone Verified Account — a digital account authenticated with a unique phone number for enhanced platform trust, higher limits, and reduced suspension risk.",
+        "description": "PVA usually means phone-verified account. Phone verification does not establish identity, ownership, platform trust, account limits, or future access.",
         "author": { "@type": "Organization", "name": "PVAITHUB" },
         "publisher": { "@type": "Organization", "name": "PVAITHUB", "url": "https://pvaithub.com" }
     },
@@ -2277,15 +2328,15 @@ const pvaDefinitionJsonLd = [
         "@context": "https://schema.org",
         "@type": "FAQPage",
         "mainEntity": [
-            { "@type": "Question", "name": "What does PVA stand for?", "acceptedAnswer": { "@type": "Answer", "text": "PVA stands for Phone Verified Account. It refers to any online account — on platforms like Google, Facebook, Instagram, or Twitter — that has been authenticated using a unique, real phone number during the registration process." } },
-            { "@type": "Question", "name": "What is the difference between a PVA account and a regular account?", "acceptedAnswer": { "@type": "Answer", "text": "A regular account may be created without phone verification, making it easier for platforms to flag as a bot or spam account. A PVA account has passed a phone verification step, which signals to the platform that a real human created it — resulting in higher trust scores, fewer security challenges, and greater longevity." } },
-            { "@type": "Question", "name": "What is an aged PVA account?", "acceptedAnswer": { "@type": "Answer", "text": "An aged PVA account is a phone-verified account that was created months or years ago and has maintained consistent activity. Age adds another layer of trust beyond verification — platforms treat older accounts with established history as significantly more credible than newly created ones." } },
-            { "@type": "Question", "name": "Who uses PVA accounts?", "acceptedAnswer": { "@type": "Answer", "text": "PVA accounts are used by digital marketers for email outreach and ad campaigns, developers for API testing and integrations, agencies managing multiple client profiles, and businesses building social proof through verified reviews. Any professional who needs reliable, platform-trusted accounts at scale uses PVAs." } },
-            { "@type": "Question", "name": "Where can I buy PVA accounts?", "acceptedAnswer": { "@type": "Answer", "text": "PVAITHUB is a trusted provider of phone-verified accounts across Google, Gmail, Facebook, Twitter, and more. Every account is verified, created on a unique IP, and backed by a replacement guarantee. Visit pvaithub.com to browse packages." } }
+            { "@type": "Question", "name": "What does PVA stand for?", "acceptedAnswer": { "@type": "Answer", "text": "PVA usually means phone-verified account. It refers to an account that completed a phone verification step; details vary by platform and service." } },
+            { "@type": "Question", "name": "What is the difference between a PVA account and a regular account?", "acceptedAnswer": { "@type": "Answer", "text": "Some accounts complete phone verification and others do not. Verification does not establish identity, improve trust scores, prevent security checks, or guarantee account longevity." } },
+            { "@type": "Question", "name": "What is an aged PVA account?", "acceptedAnswer": { "@type": "Answer", "text": "An aged account was created earlier than a new account. Age does not prove consistent activity or guarantee trust, credibility, higher limits, or access." } },
+            { "@type": "Question", "name": "Who uses PVA accounts?", "acceptedAnswer": { "@type": "Answer", "text": "People may encounter phone verification when creating accounts for permitted personal, business, or testing needs. Use accounts only as allowed by the relevant platform and keep recovery information under your control." } },
+            { "@type": "Question", "name": "Where can I buy PVA accounts?", "acceptedAnswer": { "@type": "Answer", "text": "Review the specific listing and the relevant platform's terms before making a decision. Account transfers may affect ownership, recovery, security, and platform eligibility." } }
         ]
     }
 ];
-buildStaticPage('what-is-pva-account', 'What is a PVA Account?', 'PVA stands for Phone Verified Account — a digital profile authenticated with a unique phone number, giving it higher platform trust, better deliverability, and longer lifespan than unverified accounts.', `
+buildStaticPage('what-is-pva-account', 'What is a PVA Account?', 'PVA usually means phone-verified account: an account that completed a phone verification step. Verification does not prove identity or ownership, or guarantee trust, access, deliverability, or acceptance by a platform.', `
     <!-- Definitional Hero -->
     <div class="max-w-4xl mx-auto">
         <div class="mb-12">
@@ -2294,7 +2345,7 @@ buildStaticPage('what-is-pva-account', 'What is a PVA Account?', 'PVA stands for
             </div>
             <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">What is a <span class="text-cyan-400">PVA Account</span>?</h2>
             <div class="bg-gradient-to-br from-[#1E293B] to-[#0F172A] border border-cyan-500/20 rounded-2xl p-8 mb-8">
-                <p class="text-xl text-slate-200 leading-relaxed"><strong class="text-cyan-400">PVA</strong> stands for <strong class="text-white">Phone Verified Account</strong>. A PVA account is any online user profile — on platforms such as Google, Gmail, Facebook, Instagram, Twitter, or LinkedIn — that has been authenticated using a <strong class="text-white">unique, real phone number</strong> during registration. The phone verification step signals to the platform that a real human created the account, not an automated bot.</p>
+                <p class="text-xl text-slate-200 leading-relaxed"><strong class="text-cyan-400">PVA</strong> usually means <strong class="text-white">Phone Verified Account</strong>. It describes an account that completed a phone verification step. That step alone does not establish who created or controls an account, whether the information is accurate, or whether the account complies with a platform’s rules.</p>
             </div>
         </div>
 
@@ -2303,17 +2354,17 @@ buildStaticPage('what-is-pva-account', 'What is a PVA Account?', 'PVA stands for
             <div class="bg-[#1E293B]/60 border border-white/5 rounded-2xl p-6 hover:border-cyan-500/30 transition-all">
                 <div class="w-12 h-12 bg-cyan-500/10 rounded-xl flex items-center justify-center mb-4"><i data-lucide="phone" class="w-6 h-6 text-cyan-400"></i></div>
                 <h3 class="text-lg font-bold text-white mb-2">Phone Verified</h3>
-                <p class="text-slate-400 text-sm">Created with a unique, real phone number — one number per account, never recycled or shared.</p>
+                <p class="text-slate-400 text-sm">A phone verification step was completed; number reuse and verification details depend on the service.</p>
             </div>
             <div class="bg-[#1E293B]/60 border border-white/5 rounded-2xl p-6 hover:border-green-500/30 transition-all">
                 <div class="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center mb-4"><i data-lucide="shield-check" class="w-6 h-6 text-green-400"></i></div>
                 <h3 class="text-lg font-bold text-white mb-2">Platform Trusted</h3>
-                <p class="text-slate-400 text-sm">Treated by algorithms as a legitimate human identity — fewer security challenges, lower suspension risk.</p>
+                <p class="text-slate-400 text-sm">Phone verification does not guarantee trust, fewer checks, or continued access.</p>
             </div>
             <div class="bg-[#1E293B]/60 border border-white/5 rounded-2xl p-6 hover:border-purple-500/30 transition-all">
                 <div class="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center mb-4"><i data-lucide="clock" class="w-6 h-6 text-purple-400"></i></div>
-                <h3 class="text-lg font-bold text-white mb-2">Aged = More Trusted</h3>
-                <p class="text-slate-400 text-sm">PVA accounts with months or years of history carry even greater platform credibility than newly created ones.</p>
+                <h3 class="text-lg font-bold text-white mb-2">Account Age</h3>
+                <p class="text-slate-400 text-sm">Account age does not guarantee credibility, higher limits, or continued access.</p>
             </div>
         </div>
 
@@ -2329,11 +2380,11 @@ buildStaticPage('what-is-pva-account', 'What is a PVA Account?', 'PVA stands for
                     </tr></thead>
                     <tbody class="text-sm">
                         <tr class="border-b border-slate-800/60"><td class="py-3 px-4 text-slate-300">Phone Verification</td><td class="py-3 px-4 text-slate-400">❌ Not required</td><td class="py-3 px-4 text-green-400 font-medium">✅ Completed</td></tr>
-                        <tr class="border-b border-slate-800/60"><td class="py-3 px-4 text-slate-300">Platform Trust Level</td><td class="py-3 px-4 text-slate-400">Low — flagged easily</td><td class="py-3 px-4 text-green-400 font-medium">High — treated as human</td></tr>
-                        <tr class="border-b border-slate-800/60"><td class="py-3 px-4 text-slate-300">Security Challenges</td><td class="py-3 px-4 text-slate-400">Frequent</td><td class="py-3 px-4 text-green-400 font-medium">Rare</td></tr>
-                        <tr class="border-b border-slate-800/60"><td class="py-3 px-4 text-slate-300">Sending / API Limits</td><td class="py-3 px-4 text-slate-400">Restricted</td><td class="py-3 px-4 text-green-400 font-medium">Higher limits</td></tr>
-                        <tr class="border-b border-slate-800/60"><td class="py-3 px-4 text-slate-300">Suspension Risk</td><td class="py-3 px-4 text-slate-400">High</td><td class="py-3 px-4 text-green-400 font-medium">Low</td></tr>
-                        <tr><td class="py-3 px-4 text-slate-300">Recovery Options</td><td class="py-3 px-4 text-slate-400">Limited</td><td class="py-3 px-4 text-green-400 font-medium">Full (phone + email)</td></tr>
+                        <tr class="border-b border-slate-800/60"><td class="py-3 px-4 text-slate-300">Phone Verification</td><td class="py-3 px-4 text-slate-400">May not be required</td><td class="py-3 px-4 text-slate-400">Completed, if applicable</td></tr>
+                        <tr class="border-b border-slate-800/60"><td class="py-3 px-4 text-slate-300">Security Checks</td><td class="py-3 px-4 text-slate-400">May occur</td><td class="py-3 px-4 text-slate-400">May occur</td></tr>
+                        <tr class="border-b border-slate-800/60"><td class="py-3 px-4 text-slate-300">Limits</td><td class="py-3 px-4 text-slate-400">Set by platform</td><td class="py-3 px-4 text-slate-400">Set by platform</td></tr>
+                        <tr class="border-b border-slate-800/60"><td class="py-3 px-4 text-slate-300">Trust and access</td><td class="py-3 px-4 text-slate-400">Determined by platform</td><td class="py-3 px-4 text-slate-400">Determined by platform</td></tr>
+                        <tr><td class="py-3 px-4 text-slate-300">Recovery Options</td><td class="py-3 px-4 text-slate-400">Depend on setup</td><td class="py-3 px-4 text-slate-400">Depend on setup</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -2345,15 +2396,15 @@ buildStaticPage('what-is-pva-account', 'What is a PVA Account?', 'PVA stands for
             <div class="space-y-4">
                 <div class="bg-[#1E293B]/60 border border-white/5 rounded-xl p-6 hover:border-cyan-500/20 transition-all">
                     <h4 class="text-lg font-bold text-cyan-400 mb-2">New PVA Accounts</h4>
-                    <p class="text-slate-400 text-sm">Freshly created accounts verified with a unique phone number. Best for testing, bulk sign-ups, and lower-trust use cases where account age is not critical.</p>
+                    <p class="text-slate-400 text-sm">Recently created accounts. Check each platform’s current rules and verification requirements before use.</p>
                 </div>
                 <div class="bg-[#1E293B]/60 border border-white/5 rounded-xl p-6 hover:border-green-500/20 transition-all">
                     <h4 class="text-lg font-bold text-green-400 mb-2">Aged PVA Accounts</h4>
-                    <p class="text-slate-400 text-sm">Phone-verified accounts created months or years ago with real activity history. These carry significantly higher trust — ideal for email marketing, Google Ads, social media management, and API integrations where established account history matters.</p>
+                    <p class="text-slate-400 text-sm">Accounts created earlier than new accounts. Age alone does not establish activity history, trust, higher limits, or continued access.</p>
                 </div>
                 <div class="bg-[#1E293B]/60 border border-white/5 rounded-xl p-6 hover:border-purple-500/20 transition-all">
                     <h4 class="text-lg font-bold text-purple-400 mb-2">USA PVA Accounts</h4>
-                    <p class="text-slate-400 text-sm">PVA accounts created using US residential IP addresses and +1 US phone numbers. Required for US-targeted advertising, Google Voice, and platforms that restrict access by geography.</p>
+                    <p class="text-slate-400 text-sm">Regional availability and requirements vary by platform and listing. Verify current eligibility directly with the platform.</p>
                 </div>
             </div>
         </div>
@@ -2376,7 +2427,7 @@ buildStaticPage('what-is-pva-account', 'What is a PVA Account?', 'PVA stands for
                 </div>
                 <div class="flex items-start gap-3 p-4 bg-[#1E293B]/40 rounded-xl border border-white/5">
                     <i data-lucide="star" class="w-5 h-5 text-yellow-400 shrink-0 mt-0.5"></i>
-                    <div><p class="text-white font-medium text-sm">Reputation Managers</p><p class="text-slate-400 text-xs mt-1">Post authentic-looking reviews from aged, verified accounts that platforms recognize as real user activity.</p></div>
+                    <div><p class="text-white font-medium text-sm">Reputation Managers</p><p class="text-slate-400 text-xs mt-1">Invite genuine customers to share honest feedback using platform-approved tools.</p></div>
                 </div>
             </div>
         </div>
@@ -2387,7 +2438,7 @@ buildStaticPage('what-is-pva-account', 'What is a PVA Account?', 'PVA stands for
             <div class="space-y-3">
                 <details class="group bg-[#1E293B]/60 border border-white/5 rounded-xl overflow-hidden hover:border-cyan-500/20 transition-all">
                     <summary class="flex items-center justify-between cursor-pointer p-5 text-white font-semibold select-none list-none"><span>What does PVA stand for?</span><i data-lucide="chevron-down" class="w-4 h-4 text-cyan-400 shrink-0 group-open:rotate-180 transition-transform"></i></summary>
-                    <div class="px-5 pb-5 text-slate-400 text-sm leading-relaxed border-t border-white/5 pt-4">PVA stands for <strong>Phone Verified Account</strong>. It is any digital account that has been registered and authenticated using a real, unique phone number — distinguishing it from bot-created or unverified accounts.</div>
+                    <div class="px-5 pb-5 text-slate-400 text-sm leading-relaxed border-t border-white/5 pt-4">PVA usually means an account that completed a phone verification step. This does not establish identity or distinguish a person from an automated process.</div>
                 </details>
                 <details class="group bg-[#1E293B]/60 border border-white/5 rounded-xl overflow-hidden hover:border-cyan-500/20 transition-all">
                     <summary class="flex items-center justify-between cursor-pointer p-5 text-white font-semibold select-none list-none"><span>What is the difference between a PVA and an aged account?</span><i data-lucide="chevron-down" class="w-4 h-4 text-cyan-400 shrink-0 group-open:rotate-180 transition-transform"></i></summary>
@@ -2407,7 +2458,7 @@ buildStaticPage('what-is-pva-account', 'What is a PVA Account?', 'PVA stands for
         <!-- CTA -->
         <div class="bg-gradient-to-r from-cyan-600/20 to-blue-600/20 border border-cyan-500/20 rounded-2xl p-8 text-center">
             <h3 class="text-2xl font-bold text-white mb-3">Ready to Buy Verified PVA Accounts?</h3>
-            <p class="text-slate-300 mb-6 max-w-xl mx-auto">PVAITHUB delivers phone-verified accounts across Google, Facebook, Twitter, and more — with instant delivery and a replacement guarantee on every order.</p>
+            <p class="text-slate-300 mb-6 max-w-xl mx-auto">Verification, delivery, and support terms vary by listing. Check the relevant platform rules and published policies before ordering.</p>
             <div class="flex flex-col sm:flex-row gap-3 justify-center">
                 <a href="/" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-bold rounded-xl hover:scale-105 transition-transform">Browse All PVA Accounts <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
                 <a href="/blog/what-is-pva-account-beginner-guide/" class="inline-flex items-center gap-2 px-6 py-3 bg-[#1E293B] border border-white/10 text-slate-300 font-medium rounded-xl hover:border-cyan-500/40 transition-colors">Read Full Beginner Guide <i data-lucide="book-open" class="w-4 h-4"></i></a>
@@ -2450,9 +2501,9 @@ function buildPolicyPage(pagePath, title, desc, sections) {
 buildPolicyPage('policies/privacy-policy', 'Privacy Policy', 'Read the PVAITHUB privacy policy. Learn how we collect, use, and protect your personal information.', [
     { title: 'Information We Collect', body: '<p>We collect information you provide directly, such as your name, email address, and payment details when placing an order. We also automatically collect certain technical data including your IP address, browser type, and device information to improve our services.</p>' },
     { title: 'How We Use Your Information', body: '<p>Your information is used to:</p><ul class="list-disc pl-5 space-y-1"><li>Process and deliver your orders</li><li>Communicate order updates and support responses</li><li>Improve our website and services</li><li>Prevent fraud and ensure security</li></ul>' },
-    { title: 'Data Protection', body: '<p>We implement industry-standard security measures including SSL encryption and secure payment processing. Your payment information is never stored on our servers and is processed through trusted third-party payment providers.</p>' },
-    { title: 'Third-Party Sharing', body: '<p>We do not sell, trade, or share your personal information with third parties for marketing purposes. Information may only be shared with payment processors and delivery partners as necessary to fulfill your order.</p>' },
-    { title: 'Cookies', body: '<p>Our website uses essential cookies to ensure proper functionality. These cookies do not track personal information and are necessary for the site to operate correctly.</p>' },
+    { title: 'Data Protection', body: '<p>For details about payment and site security practices, contact us before submitting sensitive information. Do not send passwords or verification codes through support channels.</p>' },
+    { title: 'Third-Party Sharing', body: '<p>Information handling can depend on the site features and providers used. Contact us with questions about how information related to a specific request is handled.</p>' },
+    { title: 'Cookies', body: '<p>Cookies or similar technologies may be used by the site or embedded providers. Contact us if you need details about a particular feature.</p>' },
     { title: 'Your Rights', body: '<p>You have the right to request access to, correction of, or deletion of your personal data at any time. To exercise these rights, please contact our support team via email at <a href="mailto:' + siteConfig.supportEmail + '" class="text-cyan-400 hover:underline">' + siteConfig.supportEmail + '</a>.</p>' },
     { title: 'Contact Us', body: '<p>If you have questions about this privacy policy, please contact us at <a href="mailto:' + siteConfig.supportEmail + '" class="text-cyan-400 hover:underline">' + siteConfig.supportEmail + '</a>.</p>' }
 ]);
@@ -2461,26 +2512,26 @@ buildPolicyPage('policies/terms-and-conditions', 'Terms and Conditions', 'Read t
     { title: 'Acceptance of Terms', body: '<p>By accessing and using PVAITHUB (pvaithub.com), you agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, please do not use our services.</p>' },
     { title: 'Services Description', body: '<p>PVAITHUB provides digital services including phone-verified accounts (PVA), review management packages, and related digital products. All services are intended for legitimate business, marketing, and research purposes only.</p>' },
     { title: 'User Responsibilities', body: '<ul class="list-disc pl-5 space-y-1"><li>You must be at least 18 years old to use our services</li><li>You are responsible for maintaining the confidentiality of your account credentials</li><li>You agree to use purchased accounts in compliance with applicable laws and platform terms of service</li><li>You must not use our services for any illegal or unauthorized purpose</li></ul>' },
-    { title: 'Payment Terms', body: '<p>All prices are listed in USD. Payment is required before delivery of any service. We accept cryptocurrency and other secure digital payment methods. All sales are final unless covered by our replacement guarantee.</p>' },
+    { title: 'Payment Terms', body: '<p>Review the price, available payment method, and any cancellation or refund terms shown for the service before submitting an order. Contact support if a checkout detail is unclear.</p>' },
     { title: 'Intellectual Property', body: '<p>All content on this website, including text, graphics, logos, and images, is the property of PVAITHUB and is protected by applicable intellectual property laws. Unauthorized reproduction is prohibited.</p>' },
     { title: 'Limitation of Liability', body: '<p>PVAITHUB shall not be liable for any indirect, incidental, or consequential damages arising from the use of our services. Our total liability shall not exceed the amount paid for the specific service in question.</p>' },
     { title: 'Changes to Terms', body: '<p>We reserve the right to modify these terms at any time. Changes will be effective immediately upon posting to this page. Continued use of our services constitutes acceptance of the updated terms.</p>' }
 ]);
 
-buildPolicyPage('policies/refund-policy', 'Refund Policy', 'Read the PVAITHUB refund and replacement policy. Learn about our 24-hour replacement guarantee.', [
-    { title: 'Replacement Guarantee', body: '<p>We stand behind the quality of our products. If any account or service does not work as described upon delivery, we will provide a <strong class="text-white">free replacement</strong> within 24 hours of your purchase.</p>' },
-    { title: 'How to Request a Replacement', body: '<ol class="list-decimal pl-5 space-y-2"><li>Contact our support team within <strong class="text-white">24 hours</strong> of receiving your order</li><li>Provide your order details and a clear description of the issue</li><li>Our team will verify the issue and process your replacement promptly</li></ol>' },
-    { title: 'Eligibility Conditions', body: '<ul class="list-disc pl-5 space-y-1"><li>Replacement requests must be submitted within 24 hours of delivery</li><li>The account must not have been modified, had its password changed, or had recovery information altered</li><li>You must provide evidence of the issue (screenshots if applicable)</li></ul>' },
-    { title: 'Non-Refundable Cases', body: '<ul class="list-disc pl-5 space-y-1"><li>Accounts that were working at delivery but were later suspended due to user actions</li><li>Requests made after the 24-hour replacement window</li><li>Services that have been fully delivered and used as intended</li></ul>' },
-    { title: 'Contact for Refund Requests', body: '<p>For all replacement and refund inquiries, please contact our support team via <a href="https://wa.me/' + (siteConfig.whatsapp || '').replace(/[^0-9]/g, '') + '" class="text-green-400 hover:underline">WhatsApp</a> or <a href="mailto:' + siteConfig.supportEmail + '" class="text-cyan-400 hover:underline">Email</a>. We aim to resolve all issues within 12 hours.</p>' }
+buildPolicyPage('policies/refund-policy', 'Refund Policy', 'Read the current PVAITHUB refund policy and review the terms that apply to your order.', [
+    { title: 'Replacement Guarantee', body: '<p>Refund or replacement eligibility depends on the policy and service terms that apply to the order. Review those terms before purchasing and contact support if you need clarification.</p>' },
+    { title: 'How to Request a Replacement', body: '<ol class="list-decimal pl-5 space-y-2"><li>Contact support using the channels listed on this site and include your order details</li><li>Provide your order details and a clear description of the issue</li><li>Our team will verify the issue and process your replacement promptly</li></ol>' },
+    { title: 'Eligibility Conditions', body: '<ul class="list-disc pl-5 space-y-1"><li>Requests are reviewed under the terms published for the service</li><li>The account must not have been modified, had its password changed, or had recovery information altered</li><li>You must provide evidence of the issue (screenshots if applicable)</li></ul>' },
+    { title: 'Non-Refundable Cases', body: '<ul class="list-disc pl-5 space-y-1"><li>Accounts that were working at delivery but were later suspended due to user actions</li><li>Requests outside the applicable eligibility terms</li><li>Services that have been fully delivered and used as intended</li></ul>' },
+    { title: 'Contact for Refund Requests', body: '<p>For all replacement and refund inquiries, please contact our support team via <a href="https://wa.me/' + (siteConfig.whatsapp || '').replace(/[^0-9]/g, '') + '" class="text-green-400 hover:underline">WhatsApp</a> or <a href="mailto:' + siteConfig.supportEmail + '" class="text-cyan-400 hover:underline">Email</a>. Response and resolution times may vary.</p>' }
 ]);
 
-buildPolicyPage('policies/shipping-or-delivery-policy', 'Shipping and Delivery Policy', 'Read the PVAITHUB delivery policy. All digital products are delivered instantly via email after payment.', [
-    { title: 'Digital Delivery', body: '<p>All our products and services are <strong class="text-white">100% digital</strong>. There is no physical shipping involved. You will receive your account credentials, login details, or service confirmation directly via email after payment.</p>' },
-    { title: 'Delivery Timeframe', body: '<ul class="list-disc pl-5 space-y-1"><li><strong class="text-white">Instant Delivery:</strong> Most orders are delivered automatically within minutes of payment confirmation</li><li><strong class="text-white">Standard Delivery:</strong> Some specialized or bulk orders may take up to 24 hours</li><li><strong class="text-white">Custom Orders:</strong> Large or custom orders will have delivery timelines communicated individually</li></ul>' },
+buildPolicyPage('policies/shipping-or-delivery-policy', 'Shipping and Delivery Policy', 'Read the PVAITHUB delivery policy for service-specific delivery details and contact options.', [
+    { title: 'Digital Delivery', body: '<p>Delivery method depends on the service. Review the listing and order information for the applicable delivery details.</p>' },
+    { title: 'Delivery Timeframe', body: '<ul class="list-disc pl-5 space-y-1"><li>Delivery timing varies by service; check the listing or order confirmation</li><li>Some services may require additional processing time; any expected timing should be confirmed in the listing</li><li><strong class="text-white">Custom Orders:</strong> Large or custom orders will have delivery timelines communicated individually</li></ul>' },
     { title: 'Delivery Method', body: '<p>Order details are delivered to the email address provided during checkout. Please ensure your email address is correct and check your spam/junk folder if you do not receive your order within the expected timeframe.</p>' },
-    { title: 'Order Confirmation', body: '<p>You will receive an order confirmation immediately after payment. If you do not receive a confirmation, please contact our support team with your payment details for verification.</p>' },
-    { title: 'Delivery Issues', body: '<p>If you experience any issues with delivery, please contact our 24/7 support team immediately via <a href="https://wa.me/' + (siteConfig.whatsapp || '').replace(/[^0-9]/g, '') + '" class="text-green-400 hover:underline">WhatsApp</a>, <a href="https://t.me/' + (siteConfig.telegram || '').replace('@', '') + '" class="text-blue-400 hover:underline">Telegram</a>, or <a href="mailto:' + siteConfig.supportEmail + '" class="text-cyan-400 hover:underline">Email</a>.</p>' }
+    { title: 'Order Confirmation', body: '<p>Order confirmation and delivery information depend on the checkout process for the service. If you do not receive a confirmation, please contact our support team with your payment details for verification.</p>' },
+    { title: 'Delivery Issues', body: '<p>If you experience any issues with delivery, please contact support through the listed channels; response times may vary via <a href="https://wa.me/' + (siteConfig.whatsapp || '').replace(/[^0-9]/g, '') + '" class="text-green-400 hover:underline">WhatsApp</a>, <a href="https://t.me/' + (siteConfig.telegram || '').replace('@', '') + '" class="text-blue-400 hover:underline">Telegram</a>, or <a href="mailto:' + siteConfig.supportEmail + '" class="text-cyan-400 hover:underline">Email</a>.</p>' }
 ]);
 
 // --- 5. Generate Robots & Sitemap ---
