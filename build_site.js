@@ -861,8 +861,16 @@ function renderProductCard(product, basePath = '/', isPriority = false) {
     </div>`;
 }
 
+function demoteEmbeddedH1(content) {
+    if (!content) return content;
+    return String(content)
+        .replace(/<h1\\b([^>]*)>/gi, '<h2$1>')
+        .replace(/<\\/h1>/gi, '</h2>');
+}
+
 function applyBlogStyleToHtml(html) {
     if (!html) return html;
+    html = demoteEmbeddedH1(html);
     // Apply blog-style classes to headings (only if no class already set)
     html = html.replace(/<h1(?![^>]*class=)([^>]*)>/g, '<h1 class="text-3xl md:text-4xl font-bold text-white mb-6 mt-8 leading-tight"$1>');
     html = html.replace(/<h2(?![^>]*class=)([^>]*)>/g, '<h2 class="text-2xl font-bold text-white mb-4 mt-6"$1>');
@@ -1544,7 +1552,7 @@ blogs.forEach((post, index) => {
 
     const sidebarHtml = generateSidebar(products, blogs);
     // Modified to pass full post object for double CTA replacement
-    let contentWithCta = injectCTA(post.content, post);
+    let contentWithCta = injectCTA(demoteEmbeddedH1(post.content), post);
     
     // Internal link products (distribute 41 products across 5 blogs)
     if (!post.safety_focus) {
