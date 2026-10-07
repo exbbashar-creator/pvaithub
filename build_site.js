@@ -1103,11 +1103,12 @@ indexHtml = indexHtml.replace(/{{ROBOTS_META}}/g, '<meta name="robots" content="
 indexHtml = indexHtml.replace(/{{REL_PATH}}/g, './');
 const homepageConfig = {
     ...siteConfig,
-    heroTitle: 'Find the digital service you need',
+    heroTitle: 'Find the <span class="home-hero__title-accent">digital service</span> you need',
     heroSubtitle: 'Explore account setup, email, and review-management services by category, with practical guides and support when you need them.'
 };
 indexHtml = replaceGlobalPlaceholders(indexHtml, homepageConfig);
 indexHtml = indexHtml.replace('Find the perfect verified accounts and services for your digital growth strategy.', 'Start with a category to explore related services and guides.');
+indexHtml = indexHtml.replace('</head>', '    <link rel="stylesheet" href="/home_hero.css">\\n</head>');
 
 // Save Homepage
 fs.writeFileSync('index.html', minifyHTML(indexHtml));
