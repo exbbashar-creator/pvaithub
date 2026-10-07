@@ -1,0 +1,5 @@
+/ui.js
+  Cache-Control: public, max-age=0, must-revalidate
+
+/output.min.css
+  Cache-Control: public, max-age=0, must-revalidate
