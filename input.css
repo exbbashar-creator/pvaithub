@@ -1,3 +1,55 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Keep the floating contact and Tawk chat clear of page content and popups. */
+body #floating-chat-container {
+  left: 20px !important;
+  right: auto !important;
+  align-items: flex-start !important;
+}
+body #floating-chat-toggle {
+  position: fixed !important;
+  left: 20px !important;
+  right: auto !important;
+  bottom: 24px !important;
+}
+body #floating-chat-options,
+body .floating-chat-options {
+  left: 20px !important;
+  right: auto !important;
+  transform-origin: bottom left !important;
+}
+body iframe[title="Chat widget"],
+body iframe[title*="tawk"] {
+  left: 20px !important;
+  right: auto !important;
+}
+body:has(#contact-popup:not(.hidden)) #floating-chat-container,
+body:has(#contact-popup:not(.hidden)) #floating-chat-options,
+body:has(#contact-popup:not(.hidden)) iframe[title="Chat widget"],
+body:has(#contact-popup:not(.hidden)) iframe[title*="tawk"] {
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+@media (max-width: 640px) {
+  body #floating-chat-container {
+    left: 12px !important;
+    right: auto !important;
+    bottom: 16px !important;
+  }
+  body #floating-chat-toggle {
+    left: 12px !important;
+    bottom: 16px !important;
+  }
+  body #floating-chat-options,
+  body .floating-chat-options {
+    left: 12px !important;
+    right: auto !important;
+    bottom: 75px !important;
+  }
+  body iframe[title="Chat widget"],
+  body iframe[title*="tawk"] {
+    left: 12px !important;
+  }
+}
