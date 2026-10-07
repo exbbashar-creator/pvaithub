@@ -1,74 +1,56 @@
-<section class="relative overflow-hidden border-b border-white/5 py-16 md:py-24" style="background:radial-gradient(circle at 78% 46%, rgba(8,145,178,.18), transparent 32%), radial-gradient(circle at 12% 8%, rgba(37,99,235,.12), transparent 30%), linear-gradient(125deg,#080e1b 0%,#0b1120 52%,#0d1830 100%)">
-    <div aria-hidden="true" class="pointer-events-none absolute inset-0 opacity-30" style="background-image:linear-gradient(rgba(148,163,184,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(148,163,184,.08) 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(to bottom,black,transparent 92%)"></div>
-    <div class="relative z-10 mx-auto max-w-7xl px-4">
-        <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
-            <div class="relative z-10 text-left">
-                <div class="mb-7 inline-flex items-center gap-2 rounded-full border border-cyan-300/20 bg-cyan-300/5 px-4 py-2 text-xs font-semibold uppercase tracking-[.18em] text-cyan-200">
-                    <span aria-hidden="true" class="h-2 w-2 rounded-full bg-cyan-300 shadow-[0_0_14px_rgba(103,232,249,.8)]"></span>
-                    A practical digital services hub
+<section class="home-hero">
+    <div class="home-hero__grid" aria-hidden="true"></div>
+    <div class="home-hero__layout">
+        <div class="home-hero__copy">
+            <p class="home-hero__eyebrow"><span class="home-hero__status" aria-hidden="true"></span>A practical digital services hub</p>
+            <h1 id="hero-title" class="home-hero__title">{{HERO_TITLE}}</h1>
+            <p id="hero-subtitle" class="home-hero__subtitle">{{HERO_SUBTITLE}}</p>
+            <div class="home-hero__actions">
+                <a class="home-hero__primary" href="{{HERO_BUTTON_LINK}}">{{HERO_BUTTON_TEXT}} <span aria-hidden="true">↗</span></a>
+                <button class="home-hero__secondary" type="button" onclick="openPopup()"><span aria-hidden="true">✳</span>{{POPUP_TITLE}}</button>
+            </div>
+            <nav class="home-hero__quicklinks" aria-label="Explore service categories">
+                <a href="/categories/google/">Google &amp; email</a>
+                <span aria-hidden="true">/</span>
+                <a href="/categories/accounts/">Social accounts</a>
+                <span aria-hidden="true">/</span>
+                <a href="/categories/reviews/">Review services</a>
+            </nav>
+        </div>
+        <div class="home-hero__visual">
+            <div class="home-hero__orbit home-hero__orbit--one" aria-hidden="true"></div>
+            <div class="home-hero__orbit home-hero__orbit--two" aria-hidden="true"></div>
+            <p class="home-hero__float-label">Find your next step <span aria-hidden="true">↘</span></p>
+            <div class="home-hero__panel">
+                <div class="home-hero__panel-head">
+                    <div>
+                        <p class="home-hero__panel-kicker">PVAITHUB <span>/</span> DIRECTORY</p>
+                        <h2>Start with a service path</h2>
+                    </div>
+                    <span class="home-hero__compass" aria-hidden="true">⌖</span>
                 </div>
-                <h1 id="hero-title" class="mb-6 text-4xl font-extrabold leading-tight tracking-tight text-white md:text-6xl">{{HERO_TITLE}}</h1>
-                <p id="hero-subtitle" class="mb-9 max-w-xl text-base leading-relaxed text-slate-300 md:text-lg">{{HERO_SUBTITLE}}</p>
-                <div class="flex flex-col gap-3 sm:flex-row">
-                    <a href="{{HERO_BUTTON_LINK}}" class="inline-flex items-center justify-center gap-3 rounded-xl bg-cyan-400 px-7 py-4 font-bold text-slate-950 shadow-lg shadow-cyan-950/40 transition hover:-translate-y-0.5 hover:bg-cyan-300">
-                        {{HERO_BUTTON_TEXT}}
-                        <i data-lucide="arrow-up-right" class="h-5 w-5" aria-hidden="true"></i>
+                <p class="home-hero__panel-intro">Choose an area to explore related services and practical resources.</p>
+                <div class="home-hero__paths">
+                    <a href="/categories/google/" class="home-hero__path home-hero__path--cyan">
+                        <span class="home-hero__path-icon" aria-hidden="true">G</span>
+                        <span class="home-hero__path-copy"><strong>Google &amp; email</strong><small>Setup help, email options, and related services</small></span>
+                        <span class="home-hero__path-arrow" aria-hidden="true">↗</span>
                     </a>
-                    <button type="button" class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 px-7 py-4 font-semibold text-white transition hover:bg-white/10" onclick="openPopup()">
-                        <i data-lucide="message-circle" class="h-4 w-4 text-cyan-300" aria-hidden="true"></i>
-                        {{POPUP_TITLE}}
-                    </button>
+                    <a href="/categories/accounts/" class="home-hero__path home-hero__path--blue">
+                        <span class="home-hero__path-icon" aria-hidden="true">◎</span>
+                        <span class="home-hero__path-copy"><strong>Social accounts</strong><small>Account resources and platform support</small></span>
+                        <span class="home-hero__path-arrow" aria-hidden="true">↗</span>
+                    </a>
+                    <a href="/categories/reviews/" class="home-hero__path home-hero__path--green">
+                        <span class="home-hero__path-icon" aria-hidden="true">✳</span>
+                        <span class="home-hero__path-copy"><strong>Review services</strong><small>Reputation and review-management support</small></span>
+                        <span class="home-hero__path-arrow" aria-hidden="true">↗</span>
+                    </a>
                 </div>
-                <div class="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-slate-400">
-                    <a href="/categories/google/" class="transition hover:text-cyan-200">Google &amp; email</a>
-                    <span aria-hidden="true" class="text-slate-600">/</span>
-                    <a href="/categories/accounts/" class="transition hover:text-cyan-200">Social accounts</a>
-                    <span aria-hidden="true" class="text-slate-600">/</span>
-                    <a href="/categories/reviews/" class="transition hover:text-cyan-200">Review services</a>
-                </div>
+                <div class="home-hero__panel-foot"><span aria-hidden="true">→</span> Clear routes to services, support, and guides.</div>
             </div>
-            <div class="relative mx-auto w-full max-w-xl" style="min-height:430px">
-                <div aria-hidden="true" class="absolute rounded-full border border-cyan-300/15" style="inset:6% 7%;transform:rotate(-16deg)"></div>
-                <div aria-hidden="true" class="absolute rounded-full border border-blue-300/10" style="inset:13% 0 13% 14%;transform:rotate(18deg)"></div>
-                <div aria-hidden="true" class="absolute rounded-full bg-cyan-400/10 blur-3xl" style="width:65%;height:65%;right:0;top:14%"></div>
-                <div class="absolute right-0 top-2 z-20 rounded-xl border border-cyan-200/20 bg-[#10233a]/95 px-4 py-3 text-xs font-semibold text-cyan-100 shadow-xl shadow-black/30 sm:right-2">
-                    Find your next step
-                </div>
-                <div class="relative z-10 mx-3 mt-12 rounded-3xl border border-white/10 bg-[#0c1728]/95 p-5 shadow-2xl shadow-black/40 backdrop-blur-xl sm:mx-8 sm:p-7">
-                    <div class="flex items-center justify-between border-b border-white/10 pb-5">
-                        <div>
-                            <p class="text-xs font-semibold uppercase tracking-[.2em] text-cyan-300">PVAITHUB / DIRECTORY</p>
-                            <h2 class="mt-2 text-2xl font-bold text-white">Start with a service path</h2>
-                        </div>
-                        <div aria-hidden="true" class="flex h-12 w-12 items-center justify-center rounded-2xl border border-cyan-300/20 bg-cyan-300/10 text-cyan-200">
-                            <i data-lucide="compass" class="h-6 w-6"></i>
-                        </div>
-                    </div>
-                    <p class="py-5 text-sm leading-relaxed text-slate-400">Explore the areas that match what you need, then open a category for details.</p>
-                    <div class="space-y-3">
-                        <a href="/categories/google/" class="group flex items-center gap-4 rounded-2xl border border-white/5 bg-white/[.03] p-4 transition hover:border-cyan-300/30 hover:bg-cyan-300/[.06]">
-                            <span aria-hidden="true" class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-cyan-400/10 text-cyan-200"><i data-lucide="globe-2" class="h-5 w-5"></i></span>
-                            <span class="min-w-0 flex-1"><span class="block font-semibold text-white">Google &amp; email</span><span class="mt-1 block text-xs text-slate-400">Setup help, email options, and related services</span></span>
-                            <i data-lucide="arrow-up-right" class="h-4 w-4 text-slate-500 transition group-hover:text-cyan-200" aria-hidden="true"></i>
-                        </a>
-                        <a href="/categories/accounts/" class="group flex items-center gap-4 rounded-2xl border border-white/5 bg-white/[.03] p-4 transition hover:border-blue-300/30 hover:bg-blue-300/[.06]">
-                            <span aria-hidden="true" class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-400/10 text-blue-200"><i data-lucide="users" class="h-5 w-5"></i></span>
-                            <span class="min-w-0 flex-1"><span class="block font-semibold text-white">Social accounts</span><span class="mt-1 block text-xs text-slate-400">Account resources and platform support</span></span>
-                            <i data-lucide="arrow-up-right" class="h-4 w-4 text-slate-500 transition group-hover:text-blue-200" aria-hidden="true"></i>
-                        </a>
-                        <a href="/categories/reviews/" class="group flex items-center gap-4 rounded-2xl border border-white/5 bg-white/[.03] p-4 transition hover:border-emerald-300/30 hover:bg-emerald-300/[.06]">
-                            <span aria-hidden="true" class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-emerald-400/10 text-emerald-200"><i data-lucide="messages-square" class="h-5 w-5"></i></span>
-                            <span class="min-w-0 flex-1"><span class="block font-semibold text-white">Review services</span><span class="mt-1 block text-xs text-slate-400">Reputation and review-management support</span></span>
-                            <i data-lucide="arrow-up-right" class="h-4 w-4 text-slate-500 transition group-hover:text-emerald-200" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                    <div class="mt-5 flex items-center gap-3 border-t border-white/10 pt-5 text-sm text-slate-400">
-                        <span aria-hidden="true" class="flex h-9 w-9 items-center justify-center rounded-full bg-white/5 text-cyan-200"><i data-lucide="move-right" class="h-4 w-4"></i></span>
-                        <span>Clear routes to services, support, and guides.</span>
-                    </div>
-                </div>
-                <div aria-hidden="true" class="absolute bottom-3 left-0 h-3 w-3 rounded-full bg-cyan-200 shadow-[0_0_22px_rgba(103,232,249,.9)] sm:left-5"></div>
-            </div>
+            <span class="home-hero__spark home-hero__spark--one" aria-hidden="true"></span>
+            <span class="home-hero__spark home-hero__spark--two" aria-hidden="true"></span>
         </div>
     </div>
 </section>
