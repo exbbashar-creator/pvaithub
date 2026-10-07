@@ -175,7 +175,8 @@ function generateFooter(products, siteConfig) {
         ? `<img src="${siteConfig.logoUrl}" alt="${siteConfig.logoText || 'Logo'}" class="h-8 w-auto"><span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 font-extrabold text-2xl tracking-tight ml-2">{{LOGO_TEXT}}</span>`
         : `<span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 font-extrabold text-2xl tracking-tight">{{LOGO_TEXT}}</span>`;
 
-    const siteDomain = (siteConfig.siteTitle || 'PVAITHUB').toLowerCase().replace(/\s+/g, '') + '.com';
+    let siteDomain = 'pvaithub.com';
+    try { siteDomain = new URL(siteConfig.baseUrl || 'https://pvaithub.com/').hostname; } catch (_) {}
 
     return `
         <div class="max-w-7xl mx-auto px-4">
@@ -721,6 +722,24 @@ function getImageUrl(img, basePath = '/') {
     return `${cleanBase}images/products/${targetImg}`;
 }
 
+function getProductImage(product) {
+    if (product && product.image) return product.image;
+    const label = `${product?.title || ''} ${product?.category || ''}`.toLowerCase();
+    const candidates = [
+        [/gmail|email|mail/, 'Buy USA Gmail.webp'],
+        [/google|gemini|youtube/, 'BUY GEMINI PRO ACCOUNTS.webp'],
+        [/twitter|\bx\b/, 'BUY TWITTER ACCOUNTS.webp'],
+        [/tinder|dating/, 'BUY TINDER ACCOUNTS.webp'],
+        [/wise|bank|crypto|venmo|cash.?app/, 'Buy Verified Wise.webp'],
+        [/review/, 'BUY GOOGLE REVIEWS.webp'],
+        [/facebook|instagram|social/, 'Buy Facebook Accounts (1).webp'],
+        [/telegram/, 'Telegram .webp'],
+        [/reddit/, 'Reddit.webp']
+    ];
+    const match = candidates.find(([pattern]) => pattern.test(label));
+    return match ? `/images/products/${match[1]}` : '';
+}
+
 function getProductSeed(product) {
     const n = Number(product && product.id);
     if (Number.isFinite(n)) return n;
@@ -776,7 +795,7 @@ function formatStartingPrice(product, fallback = 'Contact') {
 }
 
 function renderProductCard(product, basePath = '/', isPriority = false) {
-    const fullImgUrl = getImageUrl(product.image, basePath);
+    const fullImgUrl = getImageUrl(getProductImage(product), basePath);
     const loadingAttr = isPriority ? 'fetchpriority="high"' : 'loading="lazy"';
     let imageHtml = '';
     if (fullImgUrl) {
@@ -887,53 +906,18 @@ function applyBlogStyleToHtml(html) {
 
 function generateRichDescription(product) {
     if (product.long_description) return applyBlogStyleToHtml(product.long_description);
-    
     const productName = product.title;
     return `
-        <h2 class="text-xl md:text-2xl font-bold text-white mb-4">Why You Need ${productName} for Your Business</h2>
-        <p class="mb-4">
-            In the modern digital landscape, having a reliable <strong>${productName}</strong> is essential for building trust and scaling operations. 
-            Whether you are a startup, an established agency, or an individual marketer, high-quality verified accounts and authentic reviews provide the stability you need. 
-            At <strong class="text-cyan-400">PVAITHUB</strong>, we supply premium ${productName} that are fully verified and ready to deploy. 
-        </p>
-
-        <h3 class="text-lg font-bold text-white mb-3 mt-8">Core Benefits of ${productName}</h3>
-        <p class="mb-4">
-            Authenticity and reliability dictate online success. Utilizing ${productName} ensures your business can operate smoothly across platforms without unexpected disruptions.
-        </p>
+        <h2 class="text-xl md:text-2xl font-bold text-white mb-4">${productName}: Details & Requirements</h2>
+        <p class="mb-4">Review the listing above for the current options, included features, and price for <strong>${productName}</strong>. Product details and availability may change, so contact PVAITHUB support if anything is unclear before ordering.</p>
+        <h3 class="text-lg font-bold text-white mb-3 mt-8">Before You Order</h3>
         <ul class="list-disc pl-5 space-y-2 mb-6 text-slate-300">
-            <li><strong>Instant Operational Readiness:</strong> Skip the lengthy verification steps and begin immediately.</li>
-            <li><strong>Enhanced Trust Signals:</strong> Our ${productName} provides immediate authority to your profile.</li>
-            <li><strong>Platform Security:</strong> Created with clean IPs and unique device fingerprints to reduce suspension risks.</li>
+            <li>Confirm that the listed features meet your needs.</li>
+            <li>Check setup, delivery, and support information on the relevant policy pages.</li>
+            <li>Make sure your intended use follows applicable laws and the platform's current terms.</li>
         </ul>
-
-        <h3 class="text-lg font-bold text-white mb-3 mt-8">How We Ensure Quality for ${productName}</h3>
-        <p class="mb-4">
-            Security and longevity are our top priorities. When you buy ${productName} from us, you receive a meticulously crafted asset. 
-            We use residential proxies, verified phone numbers, and aged profiles where applicable, making our ${productName} indistinguishable from natural user accounts.
-        </p>
-
-        <h3 class="text-lg font-bold text-white mb-3 mt-8">Frequently Asked Questions about ${productName}</h3>
-        <div class="space-y-4 mb-6">
-            <div class="bg-[#1E293B]/50 p-4 rounded-xl border border-white/5">
-                <h4 class="font-bold text-white mb-1">Is ${productName} safe for my main business?</h4>
-                <p class="text-slate-400 text-sm">Yes, our ${productName} is generated following strict security protocols to ensure it is completely safe to integrate with your existing workflows.</p>
-            </div>
-            <div class="bg-[#1E293B]/50 p-4 rounded-xl border border-white/5">
-                <h4 class="font-bold text-white mb-1">How quickly will I receive my ${productName}?</h4>
-                <p class="text-slate-400 text-sm">Delivery is typically instant or within a few hours depending on the stock and current network conditions.</p>
-            </div>
-            <div class="bg-[#1E293B]/50 p-4 rounded-xl border border-white/5">
-                <h4 class="font-bold text-white mb-1">Do you offer a warranty on ${productName}?</h4>
-                <p class="text-slate-400 text-sm">Absolutely. If your ${productName} does not work on the first login as described, we will replace it free of charge.</p>
-            </div>
-        </div>
-
-        <h3 class="text-lg font-bold text-white mb-3 mt-8">Secure Your ${productName} Today</h3>
-        <p class="mb-4">
-            Don't let verification hurdles slow down your growth. Buying a ${productName} from PVAITHUB is a strategic investment in your digital infrastructure. 
-            Select your package above and experience seamless delivery and 24/7 dedicated support.
-        </p>
+        <h3 class="text-lg font-bold text-white mb-3 mt-8">Questions About ${productName}?</h3>
+        <p class="mb-4">Contact support through the channels listed on this site for current availability, delivery timing, or policy questions. No service can guarantee uninterrupted access or acceptance by a third-party platform.</p>
     `;
 }
 
@@ -1393,7 +1377,7 @@ function distributeProductsToBlog(content, products, blogIndex, totalBlogs) {
         productsHtml += `
                 </div>
                 <div class="mt-8 pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <p class="text-slate-400 text-sm italic">Trusted by 5,000+ happy customers worldwide.</p>
+                    <p class="text-slate-400 text-sm italic">Review service details and requirements before ordering.</p>
                     <a href="/" class="group px-6 py-2.5 rounded-full bg-cyan-500 hover:bg-cyan-400 text-white font-bold text-sm transition-all flex items-center gap-2 shadow-lg shadow-cyan-500/20">
                         Explore All ${products.length} Services <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
                     </a>
@@ -1787,7 +1771,7 @@ products.forEach(product => {
         const relColor = computeProductColor(p);
         const relSlug = p.slug.replace(/^\/+|\/+$/g, '');
         const relUrl = getDynamicUrl('product', relSlug, false);
-        const relImgUrl = getImageUrl(p.image, '../../');
+        const relImgUrl = getImageUrl(getProductImage(p), '../../');
         const relImgHtml = relImgUrl 
             ? `<img src="${relImgUrl}" alt="${p.image_title || p.title}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" decoding="async" width="400" height="300">`
             : '';
@@ -1943,7 +1927,7 @@ products.forEach(product => {
     html = html.replace('{{JSON_LD}}', `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>`);
 
     // Content
-    const fullImgUrl = getImageUrl(product.image, '../../');
+    const fullImgUrl = getImageUrl(getProductImage(product), '../../');
     const preloadHtml = fullImgUrl ? `<link rel="preload" href="${fullImgUrl}" as="image" fetchpriority="high">` : '';
     html = html.replace('{{PRODUCT_IMAGE_PRELOAD}}', preloadHtml);
 
@@ -2096,23 +2080,23 @@ buildStaticPage('about', 'About Us', 'Learn about PVAITHUB – your trusted sour
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
         <div class="bg-gradient-to-br from-[#1E293B] to-[#0F172A] border border-white/5 rounded-2xl p-8 hover:border-cyan-500/30 transition-all group">
             <div class="w-14 h-14 bg-cyan-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-cyan-500/20 transition-colors"><i data-lucide="shield-check" class="w-7 h-7 text-cyan-400"></i></div>
-            <h3 class="text-xl font-bold text-white mb-3">Secure & Verified</h3>
-            <p class="text-slate-400 text-sm leading-relaxed">Every account undergoes rigorous verification using unique IPs and real device fingerprints, ensuring authenticity and longevity.</p>
+            <h3 class="text-xl font-bold text-white mb-3">Service Details</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">Check each listing for available features, verification details, and setup requirements. Details may vary by service.</p>
         </div>
         <div class="bg-gradient-to-br from-[#1E293B] to-[#0F172A] border border-white/5 rounded-2xl p-8 hover:border-purple-500/30 transition-all group">
             <div class="w-14 h-14 bg-purple-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-purple-500/20 transition-colors"><i data-lucide="zap" class="w-7 h-7 text-purple-400"></i></div>
-            <h3 class="text-xl font-bold text-white mb-3">Instant Delivery</h3>
-            <p class="text-slate-400 text-sm leading-relaxed">Receive your account credentials within minutes of purchase. Our automated systems ensure lightning-fast delivery around the clock.</p>
+            <h3 class="text-xl font-bold text-white mb-3">Delivery Information</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">Delivery timing can vary by service and order. Check the listing or contact support for current details.</p>
         </div>
         <div class="bg-gradient-to-br from-[#1E293B] to-[#0F172A] border border-white/5 rounded-2xl p-8 hover:border-green-500/30 transition-all group">
             <div class="w-14 h-14 bg-green-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-green-500/20 transition-colors"><i data-lucide="refresh-cw" class="w-7 h-7 text-green-400"></i></div>
-            <h3 class="text-xl font-bold text-white mb-3">Replacement Guarantee</h3>
-            <p class="text-slate-400 text-sm leading-relaxed">If any account doesn't work upon delivery, we provide a free replacement within 24 hours. Your satisfaction is our priority.</p>
+            <h3 class="text-xl font-bold text-white mb-3">Policies & Support</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">Review the refund and delivery policies for applicable terms, and contact support if you need clarification.</p>
         </div>
     </div>
     <div class="bg-gradient-to-r from-cyan-600/20 to-blue-600/20 border border-cyan-500/20 rounded-2xl p-8 md:p-12 text-center">
         <h3 class="text-2xl font-bold text-white mb-4">Ready to Get Started?</h3>
-        <p class="text-slate-300 mb-8 max-w-2xl mx-auto">Browse our extensive catalog of verified accounts and digital services. Join thousands of satisfied customers today.</p>
+        <p class="text-slate-300 mb-8 max-w-2xl mx-auto">Browse service details, compare available options, and review requirements before making a decision.</p>
         <a href="/" class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-bold rounded-xl shadow-lg shadow-cyan-500/20 hover:scale-105 transition-transform">Explore All Services <i data-lucide="arrow-right" class="w-5 h-5"></i></a>
     </div>
 `);
