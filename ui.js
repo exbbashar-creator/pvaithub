@@ -58,16 +58,19 @@
     window.Tawk_API = window.Tawk_API || {};
     window.Tawk_LoadStart = window.Tawk_LoadStart || new Date();
 
-    // Position Tawk's chat iframe on the left on desktop and mobile.
+    // Keep both the site's floating contact menu and Tawk chat on the left.
     if (!document.getElementById('pvaithub-tawk-position')) {
       var style = document.createElement('style');
       style.id = 'pvaithub-tawk-position';
       style.textContent = [
-        'iframe[src*="tawk.to"], iframe[id*="tawk"] {',
-        '  left: 20px !important;',
-        '  right: auto !important;',
-        '}',
+        '#floating-chat-container { left: 20px !important; right: auto !important; align-items: flex-start !important; }',
+        '#floating-chat-toggle { left: 20px !important; right: auto !important; bottom: 24px !important; }',
+        '#floating-chat-options, .floating-chat-options { left: 20px !important; right: auto !important; bottom: 85px !important; transform-origin: bottom left !important; }',
+        'iframe[src*="tawk.to"], iframe[id*="tawk"] { left: 20px !important; right: auto !important; }',
         '@media (max-width: 640px) {',
+        '  #floating-chat-container { left: 12px !important; right: auto !important; bottom: 16px !important; }',
+        '  #floating-chat-toggle { left: 12px !important; bottom: 16px !important; }',
+        '  #floating-chat-options, .floating-chat-options { left: 12px !important; right: auto !important; bottom: 75px !important; }',
         '  iframe[src*="tawk.to"], iframe[id*="tawk"] { left: 12px !important; }',
         '}'
       ].join('\n');
