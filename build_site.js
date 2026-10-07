@@ -638,6 +638,7 @@ function replaceGlobalPlaceholders(html, siteConfig) {
     output = output.replace(/{{HERO_TITLE}}/g, siteConfig.heroTitle || '');
     output = output.replace(/{{HERO_SUBTITLE}}/g, siteConfig.heroSubtitle || '');
     output = output.replace(/{{HERO_BUTTON_TEXT}}/g, siteConfig.heroButtonText || 'Explore Services');
+    output = output.replace(/{{HERO_BUTTON_LINK}}/g, siteConfig.heroButtonLink || '#products-section');
     output = output.replace(/{{POPUP_TITLE}}/g, siteConfig.popupTitle || 'Contact Support');
     output = output.replace(/{{POPUP_MESSAGE}}/g, siteConfig.popupMessage || "We're here to help! 24/7 Support Available.");
     output = output.replace(/{{BADGE_TEXT}}/g, siteConfig.badgeText || 'Premium Quality PVA Accounts & Reviews');
@@ -1043,7 +1044,15 @@ const indexTemplate = indexTemplateRaw.replace('{{LATEST_PRODUCTS_GRID}}', `
     </div>
 `);
 
-let indexHtml = indexTemplate;
+// Use a dedicated homepage hero while keeping the shared template for interior pages.
+const homeHeroHtml = fs.readFileSync('home_hero.html', 'utf8');
+const heroStart = '<section class="relative py-20 md:py-32 overflow-hidden">';
+const heroStartIndex = indexTemplate.indexOf(heroStart);
+const heroEndIndex = indexTemplate.indexOf('</section>', heroStartIndex);
+if (heroStartIndex < 0 || heroEndIndex < 0) throw new Error('Could not locate the shared hero section.');
+const homepageTemplate = indexTemplate.slice(0, heroStartIndex) + homeHeroHtml + indexTemplate.slice(heroEndIndex + '</section>'.length);
+
+let indexHtml = homepageTemplate;
 
 // Inject Header
 indexHtml = indexHtml.replace('{{HEADER}}', generateFullHeader('./', products, categories, siteConfig));
