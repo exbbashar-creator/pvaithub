@@ -864,8 +864,8 @@ function renderProductCard(product, basePath = '/', isPriority = false) {
 function demoteEmbeddedH1(content) {
     if (!content) return content;
     return String(content)
-        .replace(/<h1\\b([^>]*)>/gi, '<h2$1>')
-        .replace(/<\\/h1>/gi, '</h2>');
+        .replace(/<h1\b([^>]*)>/gi, '<h2$1>')
+        .replace(/<\/h1>/gi, '</h2>');
 }
 
 function applyBlogStyleToHtml(html) {
