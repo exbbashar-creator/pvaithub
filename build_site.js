@@ -1275,7 +1275,7 @@ function generateSidebar(products, blogs) {
     const popularBlogs = blogs.slice(0, 3).map(b => `
         <li class="flex gap-3 items-start">
              <div class="w-16 h-16 bg-slate-700 rounded-lg overflow-hidden shrink-0">
-                <img src="${b.image}" alt="${b.title}" class="w-full h-full object-cover opacity-80 hover:opacity-100 transition">
+                <img src="${getBlogImage(b)}" alt="${b.title}" class="w-full h-full object-cover opacity-80 hover:opacity-100 transition">
              </div>
              <div>
                  <a href="${getDynamicUrl('blog', b.slug, false)}" class="text-sm font-bold text-slate-200 hover:text-cyan-400 leading-tight block mb-1">${b.title}</a>
