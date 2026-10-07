@@ -1511,6 +1511,15 @@ sitemap += '    <lastmod>' + new Date().toISOString().split('T')[0] + '</lastmod
 sitemap += '    <priority>0.8</priority>\n';
 sitemap += '  </url>\n';
 
+// Include every indexable paginated blog listing in the XML sitemap.
+for (let page = 2; page <= totalPages; page++) {
+    sitemap += '  <url>\n';
+    sitemap += `    <loc>${escapeXml(`${getDynamicUrl('blog')}page/${page}/`)}</loc>\n`;
+    sitemap += '    <lastmod>' + new Date().toISOString().split('T')[0] + '</lastmod>\n';
+    sitemap += '    <priority>0.6</priority>\n';
+    sitemap += '  </url>\n';
+}
+
 // Single Blog Posts
 blogs.forEach((post, index) => {
     const slug = slugify(post.slug);
