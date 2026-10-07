@@ -507,6 +507,7 @@ function generateLatestArticlesHtml(blogs) {
     const latest = blogs.slice(0, 3);
     const cards = latest.map(b => `
         <div class="group relative flex flex-col items-start bg-[#1E293B]/50 p-6 rounded-2xl border border-white/5 hover:border-cyan-500/30 transition-all">
+            <img src="${getBlogImage(b)}" alt="${b.title}" class="w-full aspect-[1200/630] object-cover rounded-xl mb-5 border border-white/10" loading="lazy" decoding="async" width="1200" height="630">
             <div class="flex items-center gap-x-4 text-xs mb-3">
                 <time datetime="${b.date}" class="text-slate-400">${b.date}</time>
                 <span class="relative z-10 rounded-full bg-cyan-400/10 px-3 py-1.5 font-medium text-cyan-400">Article</span>
@@ -575,6 +576,7 @@ function generateRelatedArticlesHtml(product, blogs) {
         const url = getDynamicUrl('blog', b.slug, false);
         return `
         <div class="group relative flex flex-col items-start bg-[#1E293B] p-6 rounded-2xl border border-white/5 hover:border-cyan-500/30 transition-all">
+            <img src="${getBlogImage(b)}" alt="${b.title}" class="w-full aspect-[1200/630] object-cover rounded-xl mb-5 border border-white/10" loading="lazy" decoding="async" width="1200" height="630">
             <h3 class="text-lg font-bold leading-6 text-white group-hover:text-cyan-400 transition-colors">
                 <a href="${url}">
                     <span class="absolute inset-0"></span>
@@ -720,6 +722,46 @@ function getImageUrl(img, basePath = '/') {
     // Ensure basePath has a trailing slash for filenames if it's a full URL
     const cleanBase = (basePath.startsWith('http') && !basePath.endsWith('/')) ? basePath + '/' : basePath;
     return `${cleanBase}images/products/${targetImg}`;
+}
+
+const blogCoverPaths = new Map();
+function createBlogCover(post, index) {
+    const slug = slugify(post.slug || post.title) || `article-${index + 1}`;
+    const fileName = `${String(post.id || index + 1)}-${slug.slice(0, 64)}.svg`;
+    const relativePath = `/images/blog/article-covers/${fileName}`;
+    const outputPath = path.join('images', 'blog', 'article-covers', fileName);
+    const title = String(post.title || 'Online Guide').replace(/\s+/g, ' ').trim();
+    const words = title.split(' ');
+    const lines = [];
+    let line = '';
+    for (const word of words) {
+        if (line && `${line} ${word}`.length > 27) { lines.push(line); line = word; }
+        else line = line ? `${line} ${word}` : word;
+    }
+    if (line) lines.push(line);
+    if (lines.length > 3) { lines.length = 3; lines[2] = `${lines[2].replace(/[.,;:!?]+$/, '')}…`; }
+
+    let hash = 0;
+    for (const char of slug) hash = (hash * 31 + char.charCodeAt(0)) >>> 0;
+    const hue = hash % 360;
+    const accent = `hsl(${hue}, 78%, 62%)`;
+    const topic = /gmail|email|mail/i.test(title) ? 'EMAIL GUIDE'
+        : /paypal|bank|cash app|wise|payment|finance/i.test(title) ? 'PAYMENTS GUIDE'
+        : /google|youtube|gemini/i.test(title) ? 'GOOGLE GUIDE'
+        : /facebook|instagram|tinder|bumble|social|twitter/i.test(title) ? 'SOCIAL GUIDE'
+        : /review|reputation/i.test(title) ? 'REVIEWS GUIDE'
+        : /security|safe|risk|privacy/i.test(title) ? 'SAFETY GUIDE'
+        : 'PVAITHUB INSIGHTS';
+    const titleSvg = lines.map((text, i) => `<text x="76" y="${286 + i * 65}" fill="#f8fafc" font-family="Arial,Helvetica,sans-serif" font-size="48" font-weight="700">${escapeXml(text)}</text>`).join('');
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="${escapeXml(title)}"><defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0b1120"/><stop offset="1" stop-color="#17243a"/></linearGradient><linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${accent}"/><stop offset="1" stop-color="#38bdf8"/></linearGradient><filter id="blur"><feGaussianBlur stdDeviation="44"/></filter></defs><rect width="1200" height="630" fill="url(#bg)"/><circle cx="1000" cy="120" r="165" fill="${accent}" opacity=".18" filter="url(#blur)"/><circle cx="1080" cy="535" r="180" fill="#2563eb" opacity=".18" filter="url(#blur)"/><path d="M810 0h390v630H910c100-150 90-318-100-630z" fill="#ffffff" opacity=".025"/><circle cx="1000" cy="315" r="176" fill="none" stroke="url(#accent)" stroke-width="2" opacity=".35"/><circle cx="1000" cy="315" r="132" fill="#0b1120" stroke="#ffffff" stroke-opacity=".12"/><rect x="932" y="225" width="136" height="178" rx="16" fill="#111d30" stroke="url(#accent)" stroke-width="4"/><path d="M960 270h78M960 294h58M960 330h78M960 354h56" stroke="#cbd5e1" stroke-opacity=".8" stroke-width="8" stroke-linecap="round"/><path d="m969 379 18 18 39-45" fill="none" stroke="url(#accent)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><rect x="76" y="72" width="168" height="36" rx="18" fill="${accent}" opacity=".17" stroke="${accent}" stroke-opacity=".6"/><text x="96" y="96" fill="#e0f2fe" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="700" letter-spacing="2">${topic}</text><text x="76" y="158" fill="#94a3b8" font-family="Arial,Helvetica,sans-serif" font-size="17" letter-spacing="3">PVAITHUB  /  LEARN</text>${titleSvg}<path d="M76 520h590" stroke="#ffffff" stroke-opacity=".12"/><text x="76" y="565" fill="#94a3b8" font-family="Arial,Helvetica,sans-serif" font-size="16">Practical guides and clear information</text><circle cx="1160" cy="76" r="5" fill="${accent}"/><circle cx="1138" cy="76" r="5" fill="#38bdf8" opacity=".7"/><circle cx="1116" cy="76" r="5" fill="#a78bfa" opacity=".7"/></svg>`;
+    fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+    fs.writeFileSync(outputPath, svg);
+    blogCoverPaths.set(post, relativePath);
+}
+blogs.forEach((post, index) => createBlogCover(post, index));
+
+function getBlogImage(post) {
+    return blogCoverPaths.get(post) || '/images/blog/article-covers/default.svg';
 }
 
 function getProductImage(product) {
@@ -1436,9 +1478,7 @@ for (let i = 1; i <= totalPages; i++) {
         <article class="group relative flex flex-col bg-[#0F172A] rounded-3xl border border-white/5 overflow-hidden transition-all duration-500 hover:border-cyan-500/50 hover:shadow-[0_0_50px_-12px_rgba(6,182,212,0.25)] hover:-translate-y-2 h-full">
             <a href="${getDynamicUrl('blog', b.slug).replace(baseUrl, '/')}" class="h-64 overflow-hidden relative block">
                 <picture>
-                    <source srcset="${(b.image || '').replace(/\.(jpg|jpeg|png)$/i, '.avif')}" type="image/avif">
-                    <source srcset="${(b.image || '').replace(/\.(jpg|jpeg|png)$/i, '.webp')}" type="image/webp">
-                    <img src="${b.image || 'https://via.placeholder.com/600x400?text=No+Image'}" alt="${b.image_title || b.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" decoding="async" width="600" height="400">
+                    <img src="${getBlogImage(b)}" alt="${b.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" decoding="async" width="1200" height="630">
                 </picture>
                 <div class="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-transparent opacity-80"></div>
                 
@@ -1531,6 +1571,7 @@ for (let page = 2; page <= totalPages; page++) {
 // Single Blog Posts
 blogs.forEach((post, index) => {
     const slug = slugify(post.slug);
+    const postImage = getBlogImage(post);
     const dir = path.join(paths.blog, slug);
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 
@@ -1584,12 +1625,12 @@ blogs.forEach((post, index) => {
     <meta property="og:url" content="${getDynamicUrl('blog', post.slug)}">
     <meta property="og:title" content="${post.title}">
     <meta property="og:description" content="${String(post.excerpt || '').replace(/\s+/g, ' ').trim().slice(0, 160)}">
-    ${post.image ? `<meta property="og:image" content="${getImageUrl(post.image, baseUrl)}">` : `<meta property="og:image" content="${getDynamicUrl('home')}logo.png">`}
+    <meta property="og:image" content="${getImageUrl(postImage, baseUrl)}">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="${getDynamicUrl('blog', post.slug)}">
     <meta name="twitter:title" content="${post.title}">
     <meta name="twitter:description" content="${String(post.excerpt || '').replace(/\s+/g, ' ').trim().slice(0, 160)}">
-    ${post.image ? `<meta name="twitter:image" content="${getImageUrl(post.image, baseUrl)}">` : `<meta name="twitter:image" content="${getDynamicUrl('home')}logo.png">`}
+    <meta name="twitter:image" content="${getImageUrl(postImage, baseUrl)}">
     <link rel="canonical" href="${getDynamicUrl('blog', post.slug)}" />
     <meta name="robots" content="index, follow" />
     <link rel="preload" href="${sharedCssHref}" as="style">
@@ -1646,11 +1687,9 @@ blogs.forEach((post, index) => {
                     </p>
                 </header>
 
-                ${post.image ? `
+                ${postImage ? `
                 <picture>
-                    <source srcset="${post.image.replace(/\.(jpg|jpeg|png)$/i, '.avif')}" type="image/avif">
-                    <source srcset="${post.image.replace(/\.(jpg|jpeg|png)$/i, '.webp')}" type="image/webp">
-                    <img src="${post.image}" alt="${post.image_title || post.title}" class="w-full rounded-2xl mb-10 shadow-2xl border border-white/5" loading="eager" fetchpriority="high" decoding="async" width="1200" height="630">
+                    <img src="${postImage}" alt="${post.title}" class="w-full rounded-2xl mb-10 shadow-2xl border border-white/5" loading="eager" fetchpriority="high" decoding="async" width="1200" height="630">
                 </picture>` : ''}
 
                 <div class="prose prose-sm md:prose-base lg:prose-xl prose-invert max-w-none prose-headings:text-white prose-a:text-cyan-400 prose-a:no-underline hover:prose-a:underline prose-strong:text-white leading-loose tracking-wide">
@@ -1710,9 +1749,7 @@ blogs.forEach((post, index) => {
     sitemap += `    <loc>${escapeXml(getDynamicUrl('blog', post.slug))}</loc>\n`;
     sitemap += '    <lastmod>' + new Date().toISOString().split('T')[0] + '</lastmod>\n';
     sitemap += '    <priority>0.7</priority>\n';
-    if (post.image) {
-        sitemap += `    <image:image>\n      <image:loc>${escapeXml(getImageUrl(post.image, baseUrl))}</image:loc>\n      <image:title>${escapeXml(post.image_title || post.title)}</image:title>\n    </image:image>\n`;
-    }
+    sitemap += `    <image:image>\n      <image:loc>${escapeXml(getImageUrl(postImage, baseUrl))}</image:loc>\n      <image:title>${escapeXml(post.title)}</image:title>\n    </image:image>\n`;
     sitemap += '  </url>\n';
 
     rssFeed += `
